@@ -1,4 +1,4 @@
-# 2021-04-12 (Exception Level)
+# 2021-04-12 (ARMv8 Exception Level)
 
 ### ARM 문서 참고 Documentation: https://developer.arm.com/documentation
 
@@ -44,6 +44,14 @@ ARMv8 은 AArch64 (ARM64) 와 AArch32 로 2가지의 Execution state를 제공�
 
 ![img](https://blog.kakaocdn.net/dn/p7oBx/btqC86iBO3B/KxKnpGUgKplpMWLDYBdArK/img.png)
 
-
-
 출처: https://gongpd.tistory.com/6
+
+
+
+(2021-04-13 내용 추가)
+
+ARMv8 Instruction Set Overview 에서 Wn 레지스터와 Xn 레지스터의 의미를 확인하였다.
+
+The letter W is shorthand for a 32-bit word, and X for a 64-bit extended word.
+
+[출처] https://www.element14.com/community/servlet/JiveServlet/previewBody/41836-102-1-229511/ARM.Reference_Manual.pdf
