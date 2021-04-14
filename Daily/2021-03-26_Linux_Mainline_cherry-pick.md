@@ -40,7 +40,7 @@ git fetch https://github.com/torvalds/linux.git master && git cherry-pick 53fedc
 
 
 
-방화벽 문제로 링크가 문제가 생긴 경우 에러 메세지는 다음과 같다.
+에러 메세지는 다음과 같다. (위의 github git을 사용하고도 에러가 났는데, 따라서 방화벽 문제가 맞는지 알 수 없었다)
 
 ```shell
 $ git fetch https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux master && git cherry-pick db24726
