@@ -1,4 +1,4 @@
-# 2021-04-27 (BUS architecture)
+# 2021-04-27 (ARM BUS architecture)
 
 ### Bus 정리
 
