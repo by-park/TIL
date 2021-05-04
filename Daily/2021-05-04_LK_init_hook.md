@@ -8,6 +8,8 @@ Little kernel의 초기화 과정 중 init hook 에 대하여 정리해본다.
 
 
 
+다음과 같이 초기에 함수들이 불린다.
+
 top/main.c
 
 (https://github.com/littlekernel/lk/blob/master/top/main.c)
@@ -41,7 +43,7 @@ static int bootstrap2(void *arg) {
 
 
 
-hook 등록은 여기서 이루어진다. Level은 threading으로 들어갔다.
+대표적인 예시로 hook 등록들 중 하나는 여기서 이루어진다. Level은 threading으로 들어갔다.
 
 lib/sysparam/sysparam.c
 
@@ -53,6 +55,28 @@ static void sysparam_init(uint level) {
 }
 
 LK_INIT_HOOK(sysparam, &sysparam_init, LK_INIT_LEVEL_THREADING);
+```
+
+
+
+hook 함수는 다음과 같이 lk_init 이라는 section 에 들어가게 된다.
+
+top/include/lk/init.h
+
+(https://github.com/littlekernel/lk/blob/master/top/include/lk/init.h)
+
+```c
+#define LK_INIT_HOOK_FLAGS(_name, _hook, _level, _flags) \
+    const struct lk_init_struct _init_struct_##_name __ALIGNED(sizeof(void *)) __SECTION("lk_init") = { \
+        .level = _level, \
+        .flags = _flags, \
+        .hook = _hook, \
+        .name = #_name, \
+    };
+
+#define LK_INIT_HOOK(_name, _hook, _level) \
+    LK_INIT_HOOK_FLAGS(_name, _hook, _level, LK_INIT_FLAG_PRIMARY_CPU)
+
 ```
 
 
@@ -99,9 +123,16 @@ static inline void lk_primary_cpu_init_level(uint start_level, uint stop_level) 
 
 
 
-lk_init_level에서는 hook 을 호출한다.
+lk_init_level에서는 \__start_lk_init 구조체부터 __stop_lk_init 구조체를 돌면서 init hook 을 호출한다. 이 구조체는 ld 파일에 있다고 하는데, github에서 찾지 못하였다.
+
+top/init.c
+
+(https://github.com/littlekernel/lk/blob/master/top/init.c)
 
 ```c
+extern const struct lk_init_struct __start_lk_init __WEAK;
+extern const struct lk_init_struct __stop_lk_init __WEAK;
+
 void lk_init_level(enum lk_init_flags required_flag, uint start_level, uint stop_level) {
     LTRACEF("flags %#x, start_level %#x, stop_level %#x\n",
             required_flag, start_level, stop_level);
