@@ -1,5 +1,5 @@
 ---
-typora-copy-images-to: images
+
 ---
 
 # Engineer Information Processing Exam
@@ -26,7 +26,7 @@ typora-copy-images-to: images
 
 - ***애자일 모형***: 요구사항 변화에 유연하게 대응 가능한 모형. 고객과의 소통에 초점을 맞춘 방법론. 애자일 모형의 종류 중 하나로 XP가 있다.
 
-
+[]()
 
 ### XP (eXtreme Programming) 기법
 
@@ -147,13 +147,22 @@ typora-copy-images-to: images
 
 
 
-### 데이터 흐름도
+### 데이터 흐름도 (DFD, Data Flow Diagram)
+
+- 데이터가 각 프로세스를 따라 흐르면서 변환되는 모습을 나타낸 그림
+- 시스템 분석과 설계에서 매우 유용하게 사용되는 다이어그램
+- 데이터 흐름도는 시스템의 모델링 도구로서 가장 보편적으로 사용되는 것 중의 하나
+- 자료 흐름 그래프 또는 버블차트라고 함
+
+[출처] https://computer-science-student.tistory.com/103
+
+![img](https://blog.kakaocdn.net/dn/cyBvBP/btqTIoBt03B/r5e6cDTyS7uM9WQnOaUoMK/img.png)
 
 
 
-> 4. 데이터 흐름도 (DFD)의 구성요소에 포함되지 않는 것은? 답 (4)
+> 데이터 흐름도 (DFD)의 구성요소에 포함되지 않는 것은? 답 (4)
 >
->    (1) process (2) data flow (3) data store (4) data dictionary
+> ​	(1) process (2) data flow (3) data store (4) data dictionary
 >
 > [출처] 전자문제집 CBT 2020년 6월 6일 필기 기출문제
 
@@ -173,7 +182,27 @@ typora-copy-images-to: images
 
 
 
-### 자료사전
+> 9. DFD (data flow diagram) 에 대한 설명으로 틀린 것은? 답 (3)
+>
+>    (1) 자료 흐름 그래프 또는 버블 (bubble) 차트라고도 한다.
+>
+>    (2) 구조적 분석 기법에 이용된다.
+>
+>    (3) 시간 흐름을 명확하게 표현할 수 있다.
+>
+>    (4) DFD의 요소는 화살표, 원, 사각형, 직선(단선/이중선) 으로 표시한다.
+>
+> [출처] 전자문제집 CBT 2020년 9월 26일 필기 기출문제
+
+
+
+### 자료사전 (DD, Data Dictionary)
+
+- 자료사전이란? 자료 요소, 자료 요소들의 집합, 자료의 흐름, 자료 저장소의 의미와 그들 간의 관계, 관계 값, 범위, 단위들을 구체적으로 명시하는 사전
+
+![image-20210515002458343](images/image-20210515002458343.png)
+
+[출처] https://computer-science-student.tistory.com/103
 
 
 
@@ -215,6 +244,14 @@ typora-copy-images-to: images
 - 사물 (Things)
 - 관계
 - 다이어그램
+
+
+
+> 11. UML 의 기본 구성요소가 아닌 것은? 답 (2)
+>
+>     (1) Things (2) Terminal (3) Relationship (4) Diagram
+>
+> [출처] 전자문제집 CBT 2020년 9월 26일 필기 기출문제
 
 
 
@@ -338,6 +375,9 @@ typora-copy-images-to: images
 
 ### 소프트웨어 아키텍처
 
+- 모듈화
+- 추상화
+- 단계적 분해
 - 정보 은닉
 
 
@@ -438,6 +478,54 @@ typora-copy-images-to: images
 >    (4) 상위 클래스의 모든 속성과 연산을 하위 클래스가 물려받는 것을 의미한다.
 >
 > [출처] 전자문제집 CBT 2020년 9월 26일 필기 기출문제
+
+
+
+### 럼바우 객체지향 분석 기법
+
+- 구성 요소를 그래픽 표기로 모델링하는 기법으로 OMT(Object Modeling Technique)이라고 부릅니다.
+- Object 모델링 → Dynamic 모델링 → Functioanl 모델링 순서로 진행합니다.
+- Object 모델링: 정보 모델링으로 필요한 Object를 찾고 Object 사이의 관계를 정하는 모델링
+- Dynamic 모델링:  상태도를 이용하여 제어 흐름을 모델링
+- Functional 모델링: 자료 흐름도를 이용하여 다수의 프로세스 사이의 자료 흐름을 중심으로 처리 과정을 표현한 모델링
+
+[출처] http://ehpub.co.kr/tag/%EB%9F%BC%EB%B0%94%EC%9A%B0rumbaugh%EC%9D%98-%EB%B6%84%EC%84%9D-%EA%B8%B0%EB%B2%95/
+
+
+
+> 14. 럼바우 (Rumbaugh) 의 객체지향 분석 절차를 가장 바르게 나열한 것은? 답 (1)
+>
+>     (1) 객체 모형 -> 동적 모형  -> 기능 모형
+>
+>     (2) 객체 모형 -> 기능 모형 - > 동적 모형
+>
+>     (3) 기능 모형 -> 동적 모형 -> 객체 모형
+>
+>     (4) 기능 모형 -> 객체 모형 -> 동적 모형
+>
+> [출처] 전자문제집 CBT 2020년 6월 6일 필기 기출문제
+
+
+
+> 10. 그래픽 표기법을 이용하여 소프트웨어 구성 요소를 모델링하는 럼바우 분석 기법에 포함되지 않는 것은? 답 (4)
+>
+>     (1) 객체 모델링 (2) 기능 모델링 (3) 동적 모델링 (4) 블랙박스 분석 모델링
+>
+> [출처] 전자문제집 CBT 2020년 9월 26일 필기 기출문제
+
+
+
+> 2. 럼바우 (Rumbaugh) 객체지향 분석 기법에서 동적 모델링에 활용되는 다이어그램은? 답 (3)
+>
+>    (1) 객체 다이어그램 (Object Diagram)
+>
+>    (2) 패키지 다이어그램 (Package Diagram)
+>
+>    (3) 상태 다이어그램 (State Diagram)
+>
+>    (4) 자료 흐름도 (Data Flow Diagram)
+>
+> [출처] 전자문제집 CBT 2020 년 9월 26일 필기 기출문제
 
 
 
@@ -546,10 +634,6 @@ typora-copy-images-to: images
 
 
 
-GoF (Gangs of Four) 디자인 패턴
-
-
-
 > 8. 디자인 패턴 중에서 행위적 패턴에 속하지 않는 것은? 답 (3)
 >
 >    (1) 커맨드 (Command) 패턴
@@ -561,22 +645,6 @@ GoF (Gangs of Four) 디자인 패턴
 >    (4) 상태 (State) 패턴
 >
 > [출처] 전자문제집 CBT 2020년 8월 22일 필기 기출문제
-
-
-
-> 7. GoF (Gangs of Four) 의 디자인 패턴에서 행위 패턴에 속하는 것은? 답 (2)
->
->    (1) Builder (2) Visitor (3) Prototype (4) Bridge
->
-> [출처] 전자문제집 CBT 2020년 6월 6일 필기 기출문제
-
-
-
-> 19. GoF (Gangs of Four) 디자인 패턴 분류에 해당하지 않는 것은? 답 (4)
->
->     (1) 생성 패턴 (2) 구조 패턴 (3) 행위 패턴 (4) 추상 패턴
->
-> [출처] 전자문제집 CBT 2020년 9월 26일 필기 기출문제
 
 
 
@@ -600,6 +668,48 @@ GoF (Gangs of Four) 디자인 패턴
 >    (3) 재사용을 위한 개발 시간이 단축된다.
 >
 >    (4) 절차형 언어와 함께 이용될 때 효율이 극대화된다.
+>
+> [출처] 전자문제집 CBT 2020년 9월 26일 필기 기출문제
+
+
+
+
+
+### GoF (Gangs of Four) 디자인 패턴
+
+GoF(Gang of Four)에서는 23가지 디자인 패턴을 3가지 유형으로 분류합니다.
+
+A. Creational Pattern
+
+- 객체를 생성하는데 관련된 패턴들
+- 객체가 생성되는 과정의 유연성을 높이고 코드의 유지를 쉽게 함
+
+B. Structural Pattern
+
+- 프로그램 구조에 관련된 패턴들
+- 프로그램 내의 자료구조나 인터페이스 구조 등 프로그램의 구조를 설계하는데 활용할 수 있는 패턴들
+
+C. Behavioral Pattern
+
+- 반복적으로 사용되는 객체들의 상호작용을 패턴화 해놓은 것들
+
+![img](https://realzero0.github.io/assets/img/gof_types.png)
+
+[출처] https://realzero0.github.io/study/2017/06/12/%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4-%EC%A0%95%EB%A6%AC.html
+
+
+
+> 7. GoF (Gangs of Four) 의 디자인 패턴에서 행위 패턴에 속하는 것은? 답 (2)
+>
+>    (1) Builder (2) Visitor (3) Prototype (4) Bridge
+>
+> [출처] 전자문제집 CBT 2020년 6월 6일 필기 기출문제
+
+
+
+> 19. GoF (Gangs of Four) 디자인 패턴 분류에 해당하지 않는 것은? 답 (4)
+>
+>     (1) 생성 패턴 (2) 구조 패턴 (3) 행위 패턴 (4) 추상 패턴
 >
 > [출처] 전자문제집 CBT 2020년 9월 26일 필기 기출문제
 
