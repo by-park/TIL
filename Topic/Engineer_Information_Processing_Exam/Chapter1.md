@@ -26,7 +26,7 @@
 
 - ***애자일 모형***: 요구사항 변화에 유연하게 대응 가능한 모형. 고객과의 소통에 초점을 맞춘 방법론. 애자일 모형의 종류 중 하나로 XP가 있다.
 
-[]()
+
 
 ### XP (eXtreme Programming) 기법
 
@@ -302,6 +302,30 @@
   - 유스케이스, 시퀀스
   - 커뮤니케이션, 상태
   - 활동, 상호작용 개요, 타이밍
+
+
+
+클래스 다이어그램
+
+![A simple class diagram for a commercial software application, in UML... |  Download Scientific Diagram](https://www.researchgate.net/profile/Sergi-Valverde/publication/225686440/figure/fig3/AS:667828239732738@1536234068086/A-simple-class-diagram-for-a-commercial-software-application-in-UML-notation-The.png)
+
+
+
+유스케이스 다이어그램
+
+![소프트웨어 공학] 모델링과 UML, 유스케이스 다이어그램 : 네이버 블로그](https://mblogthumb-phinf.pstatic.net/MjAxNzA1MTBfNTAg/MDAxNDk0MzkxMjEyODQy._X90dmijdHf8463ZjPWEdVo_tcPpNRdsmW11L_hfjxsg.Rl9xV80ED5PgQyuz7C16vysed3yR1xYYik48Ckg9rE0g.PNG.ljh0326s/image.png?type=w800)
+
+
+
+시퀀스 다이어그램
+
+![UML ] 시퀀스 다이어그램(Sequence Diagram) 이론](https://blog.kakaocdn.net/dn/chJ6te/btqtSMHtMjJ/28ivQtT3KmZKCOf3burLmK/img.png)
+
+
+
+활동 다이어그램
+
+![활동 다이어그램 - 위키백과, 우리 모두의 백과사전](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Activity_conducting.svg/1200px-Activity_conducting.svg.png)
 
 
 
