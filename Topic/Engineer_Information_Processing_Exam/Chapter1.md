@@ -509,6 +509,7 @@
 
 - 구성 요소를 그래픽 표기로 모델링하는 기법으로 OMT(Object Modeling Technique)이라고 부릅니다.
 - Object 모델링 → Dynamic 모델링 → Functioanl 모델링 순서로 진행합니다.
+- ★ "객 - 동 - 기" 로 암기하면 된다!
 - Object 모델링: 정보 모델링으로 필요한 Object를 찾고 Object 사이의 관계를 정하는 모델링
 - Dynamic 모델링:  상태도를 이용하여 제어 흐름을 모델링
 - Functional 모델링: 자료 흐름도를 이용하여 다수의 프로세스 사이의 자료 흐름을 중심으로 처리 과정을 표현한 모델링
