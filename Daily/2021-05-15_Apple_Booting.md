@@ -2,11 +2,11 @@
 
 ### Apple Booting Sequence
 
-![img](C:/Users/BY/Documents/Github/TIL/Daily/images/bootprocess.png)
+![img](images/210515_apple_booting_01.png)
 
 [그림 출처] https://osxdaily.com/2018/08/25/visualizing-mac-startup-boot-process/
 
-![OSX boot sequence](https://busylog.net/wp-content/uploads/2012/07/osx-boot-sequence-300x225.png)
+![OSX boot sequence](images/210515_apple_booting_02.png)
 
 [그림 출처] https://busylog.net/mac-osx-boot-sequence-launchd/
 
