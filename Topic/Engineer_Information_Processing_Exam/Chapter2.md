@@ -1,5 +1,5 @@
 ---
-
+typora-copy-images-to: images
 ---
 
 # Engineer Information Processing Exam (정보처리기사 시험)
@@ -96,6 +96,18 @@
 
 
 
+> 26. 제어흐름 그래프가 다음과 같을 때 McCabe의 cyclomatic 수는 얼마인가? 답 ()
+>
+>     ![img](data:image/png;base64,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)
+>
+>     (1) 3     (2) 4     (3) 5     (4) 6
+>
+> [출처] 전자문제집 CBT 2020년 8월 22일 필기 기출문제
+>
+> [그림 출처] https://q.fran.kr/%EB%AC%B8%EC%A0%9C/6802
+
+
+
 ### 데이터 베이스
 
 - 데이터베이스 특징
@@ -136,6 +148,20 @@
 
 
 ## 2. 소프트웨어 개발 (통합 구현)
+
+> 22. 소프트웨어 공학의 기본 원칙이라고 볼 수 없는 것은? 답 (4)
+>
+>     (1) 품질 높은 소프트웨어 상품 개발
+>
+>     (2) 지속적인 검증 시행
+>
+>     (3) 결과에 대한 명확한 기록 유지
+>
+>     (4) 최대한 많은 인력 투입
+>
+> [출처] 전자문제집 CBT 2020년 8월 22일 필기 기출문제
+
+
 
 ### 단위 모듈
 
@@ -231,7 +257,19 @@ Black Box Testing 종류: Equivalence Partitioning Testing, Boundary Value Testi
 
 ### 국제 표준 제품 품질
 
-- ISO/IEC 12119 등
+- ISO/IEC 9126: 소프트웨어 품질 특성 및 거도에 대한 표준화
+- ISO/IEC 14598: 소프트웨어 제품 평가
+- ISO/IEC 12119: 패키지 소프트웨어 평가
+
+
+
+> 23. 패키지 소프트웨어의 일반적인 제품 품질 요구사항 및 테스트를 위한 국제 표준은? 답 (3)
+>
+>     (1) ISO/IEC 2196 (2) IEEE 19554
+>
+>     (3) ISO/IEC 12119 (4) ISO/IEC 14959
+>
+> [출처] 전자문제집 CBT 2020년 8월 22일 필기 기출문제
 
 
 
@@ -239,7 +277,7 @@ Black Box Testing 종류: Equivalence Partitioning Testing, Boundary Value Testi
 >
 >     (1) 정확성 (2) 무결성 (3) 사용성 (4) 간결성
 >
-> [출처] 전자문제집 CBT 2020 년 6월 6일 필기 기출문제
+> [출처] 전자문제집 CBT 2020년 6월 6일 필기 기출문제
 
 
 
@@ -291,7 +329,26 @@ Black Box Testing 종류: Equivalence Partitioning Testing, Boundary Value Testi
 
 ### 테스트 기법에 따른 애플리케이션 테스트
 
-- 화이트박스, 블랙박스 테스트
+- 화이트박스
+  - 기초 경로 검사
+  - 제어구조 검사
+    - 조건 검사
+    - 루프 검사
+    - 데이터 흐름 검사
+- 블랙박스 테스트
+  - 동치 분할 검사
+  - 경계값 분석
+  - 원인-효과 그래프 검사
+  - 오류 예측 검사
+  - 비교 검사
+
+
+
+> 25. 블랙박스 테스트의 유형으로 틀린 것은? 답 (4)
+>
+>     (1) 경계값 분석 (2) 오류 예측 (3) 동등 분할 기법 (4) 조건, 루프 검사
+>
+> [출처] 전자문제집 CBT 2020년 8월 22일 필기 기출문제
 
 
 
@@ -300,6 +357,8 @@ Black Box Testing 종류: Equivalence Partitioning Testing, Boundary Value Testi
 >     ![image-20210515022435666](images/image-20210515022435666.png)
 >
 >     (1) 59 (2) 80 (3) 90 (4) 101
+>
+> [출처] 전자문제집 CBT 2020년 6월 6일 필기 기출문제
 
 
 
@@ -368,6 +427,20 @@ Black Box Testing 종류: Equivalence Partitioning Testing, Boundary Value Testi
 
 
 
+> 24. 다음 중 클린 코드 작성원칙으로 거리가 먼 것은? 답 (2)
+>
+>     (1) 누구든지 쉽게 이해하는 코드 작성
+>
+>     (2) 중복이 최대화된 코드 작성
+>
+>     (3) 다른 모듈에 미치는 영향 최소화
+>
+>     (4) 단순, 명료한 코드 작성
+>
+> [출처] 전자문제집 CBT 2020년 8월 22일 필기 기출문제
+
+
+
 > 36. 소스코드 품질분석 도구 중 정적분석 도구가 아닌 것은? 답 (3)
 >
 >     (1) pmd (2) cppcheck (3) valMeter (4) checkstyle
@@ -408,6 +481,10 @@ Black Box Testing 종류: Equivalence Partitioning Testing, Boundary Value Testi
 
 ### 인터페이스 보안
 
+- IPSec: 네트워크 계층에서 IP 패킷 단위의 데이터 변조 방지 및 은닉 기능 제공
+- SSL: TCP / IP 계층과 애플리케이션 계층 사이에서 인증, 암호화, 무결성을 보장하는 프로토콜
+- S-HTTP: 클라이언트와 서버 간 전송되는 모든 메시지를 암호화하는 프로토콜
+
 
 
 > 27. 인터페이스 보안을 위해 네트워크 영역에 적용될 수 있는 솔루션과 거리가 먼 것은? 답 (2)
@@ -415,6 +492,14 @@ Black Box Testing 종류: Equivalence Partitioning Testing, Boundary Value Testi
 >     (1) IPSec (2) SMTP (3) SSL (4) S-HTTP
 >
 > [출처] 전자문제집 CBT 2020년 6월 6일 필기 기출문제
+
+
+
+> 21. 인터페이스 보안을 위해 네트워크 영역에 적용될 수 있는 솔루션과 거리가 먼 것은? 답 (3)
+>
+>     (1) IPSec (2) SSL (3) SMTP (4) S-HTTP
+>
+> [출처] 전자문제집 CBT 2020년 8월 22일 필기 기출문제
 
 
 
