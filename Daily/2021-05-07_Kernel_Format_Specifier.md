@@ -16,6 +16,8 @@ Kernel's `printk()` supports special `%p` format specifiers:
 
 See https://www.kernel.org/doc/Documentation/printk-formats.txt for full list.
 
+or https://www.kernel.org/doc/html/latest/core-api/printk-formats.html
+
 For your example, setting the `initcall_debug=1` kernel cmdline option might be a better way, than adding `printk()` manually.
 
 [출처] https://stackoverflow.com/questions/49347664/how-to-print-function-name-with-function-pointer-in-linux-kernel
