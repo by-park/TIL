@@ -5,9 +5,9 @@ typora-copy-images-to: images
 # Blockchain
 
 - 사용한 것들: python, flask, visual studio code
-- 유튜브 강의: https://www.youtube.com/watch?v=Gno15LgVbcc
-- 소스 코드: https://github.com/tr0y-kim/ez_blockchain/blob/master/blockchain.py
-
+- 유튜브 강의 (coinsight): https://www.youtube.com/watch?v=Gno15LgVbcc
+- 유튜브 강의 소스 코드: https://github.com/tr0y-kim/ez_blockchain
+- 원본 강의 (hackernoon): https://hackernoon.com/learn-blockchains-by-building-one-117428612f46
 - 작성한 내 결과물: https://github.com/BY1994/Blockchain
 
 
