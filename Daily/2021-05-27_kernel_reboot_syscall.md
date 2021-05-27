@@ -55,6 +55,8 @@ SYSCALL_DEFINE4(reboot, int, magic1, int, magic2, unsigned int, cmd,
 
 출처: http://rousalome.egloos.com/v/9991442
 
+include/linux/syscalls.h
+
 ```c
 14 #define SYSCALL_DEFINEx(x, sname, ...)				\
 15	SYSCALL_METADATA(sname, x, __VA_ARGS__)			\
@@ -93,13 +95,149 @@ ________address|value_______|symbol
 
 
 
-syscall 번호는 아래 header에서 확인할 수 있다. (모든 번호가 다 보이지 않아서 확인 중..)
+syscall 번호는 아래 header에서 확인할 수 있다고 한다.
 
 `arch/arm/include/asm/unistd.h`
 
 `include/linux/syscalls.h`
 
 https://stackoverflow.com/questions/28126204/simple-system-call-implementation-example
+
+
+
+내가 직접 커널 코드 (5.9.11) 에서 확인한 결과 다음의 코드에 있었다.
+
+arch/arm64/include/asm/unistd32.h: \__SYSCALL(__NR_reboot, sys_reboot)
+
+```c
+#define __NR_swapon 87
+__SYSCALL(__NR_swapon, sys_swapon)
+#define __NR_reboot 88
+__SYSCALL(__NR_reboot, sys_reboot)
+                        /* 89 was sys_readdir */
+__SYSCALL(89, sys_ni_syscall)
+                        /* 90 was sys_mmap */
+__SYSCALL(90, sys_ni_syscall)
+```
+
+arch/arc/kernel/sys.c: #define __SYSCALL(nr, call) [nr] = (call),
+
+arch/arm64/kernel/sys.c: #define \__SYSCALL(nr, sym)      asmlinkage long __arm64_
+##sym(const struct pt_regs *);
+
+arch/arm64/kernel/sys.c: #define \__SYSCALL(nr, sym)      [nr] = __arm64_##sym,
+
+arch/arm64/kernel/sys32.c:#define \__SYSCALL(nr, sym)    asmlinkage long __arm64_
+##sym(const struct pt_regs *);
+
+```
+$ git grep __NR_reboot
+arch/arm64/include/asm/unistd32.h:#define __NR_reboot 88
+arch/arm64/include/asm/unistd32.h:__SYSCALL(__NR_reboot, sys_reboot)
+include/uapi/asm-generic/unistd.h:#define __NR_reboot 142
+include/uapi/asm-generic/unistd.h:__SYSCALL(__NR_reboot, sys_reboot)
+tools/include/nolibc/nolibc.h:  return my_syscall4(__NR_reboot, magic1, magic2, cmd, arg);
+tools/include/uapi/asm-generic/unistd.h:#define __NR_reboot 142
+tools/include/uapi/asm-generic/unistd.h:__SYSCALL(__NR_reboot, sys_reboot)
+```
+
+
+
+arch/arm64/kernel/sys.c
+
+```c
+/*
+ * Wrappers to pass the pt_regs argument.
+ */
+#define __arm64_sys_personality         __arm64_sys_arm64_personality
+
+#undef __SYSCALL
+#define __SYSCALL(nr, sym)      asmlinkage long __arm64_##sym(const struct pt_regs *);
+#include <asm/unistd.h>
+
+#undef __SYSCALL
+#define __SYSCALL(nr, sym)      [nr] = __arm64_##sym,
+
+const syscall_fn_t sys_call_table[__NR_syscalls] = {
+        [0 ... __NR_syscalls - 1] = __arm64_sys_ni_syscall,
+#include <asm/unistd.h>
+};
+```
+
+arch/arm64/include/asm/syscall_wrapper.h:       asmlinkage long __arm64_sys##name(const struct pt_regs *regs);
+
+```c
+#define __SYSCALL_DEFINEx(x, name, ...)                                         \
+        asmlinkage long __arm64_sys##name(const struct pt_regs *regs);          \
+        ALLOW_ERROR_INJECTION(__arm64_sys##name, ERRNO);                        \
+        static long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__));             \
+        static inline long __do_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__));      \
+        asmlinkage long __arm64_sys##name(const struct pt_regs *regs)           \
+        {                                                                       \
+                return __se_sys##name(SC_ARM64_REGS_TO_ARGS(x,__VA_ARGS__));    \
+
+```
+
+
+
+arch/arm64/include/asm/unistd.h
+
+```c
+#define __NR_compat_syscalls            440
+#endif
+
+#define __ARCH_WANT_SYS_CLONE
+
+#ifndef __COMPAT_SYSCALL_NR
+#include <uapi/asm/unistd.h>
+#endif
+
+#define NR_syscalls (__NR_syscalls)
+```
+
+arch/arm64/include/uapi/asm/unistd.h
+
+```c
+#include <asm-generic/unistd.h>
+```
+
+여기에 해당하는 header를 찾지 못했다. 경로에 uapi 는 빠져있지만 다음의 함수가 접근되는 것인가 싶다.
+
+include/uapi/asm-generic/unistd.h:\__SYSCALL(__NR_fspick, sys_fspick)
+
+관련 질문 답변
+
+> UAPI stands for User API and is the name of a folder in the kernel sources that is intended to be copied to an installation as part of the user-accessible kernel headers. In the case of Arch, some of these headers are copied to `/usr/include/linux/` (plus some generated files on kernel compilation). But this is not part of the default install, it is actually separated in a different package: `linux-api-headers` (after installing, you can use `#include `).
+>
+> There is no `/usr/include/uapi` and this is by design, the contents of the original uapi folder are directly copied into `/usr/include`.
+>
+> So, unless you are programming a kernel module, what you are probably looking for is `#include `.
+
+출처: https://stackoverflow.com/questions/45340907/what-is-the-correct-method-to-include-uapi-directory-in-archlinux/45397736
+
+https://stackoverflow.com/questions/18858190/whats-in-include-uapi-of-kernel-source-project
+
+https://www.spinics.net/lists/linux-kbuild/msg12850.html
+
+> All headers under include/uapi/, include/generated/uapi/, arch/<arch>/include/uapi/ and arch/<arch>/include/generated/uapi/ are exported.
+
+https://01.org/linuxgraphics/gfx-docs/drm/kbuild/makefiles.html
+
+
+
+### gcc 배열 인덱스 초기화 방식
+
+```
+enum { HYDROGEN = 1, HELIUM = 2, CARBON = 6, NEON = 10, … };` and `struct element { char name[15]; char symbol[3]; } elements[] = { [NEON] = { "Neon", "Ne" }, [HELIUM] = { "Helium", "He" }, [HYDROGEN] = { "Hydrogen", "H" }, [CARBON] = { "Carbon", "C" }, … };
+```
+
+If your compiler is GCC you can use following syntax:
+
+```c
+int array[1024] = {[0 ... 1023] = 5};
+```
+
+https://stackoverflow.com/questions/201101/how-to-initialize-all-members-of-an-array-to-the-same-value
 
 
 
