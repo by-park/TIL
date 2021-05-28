@@ -1,5 +1,7 @@
 # 2021-05-27 (kernel reboot syscall)
 
+요약: kernel에서 sys_reboot 함수를 생성하고 sys_call_table이라는 벡터에 특정 인덱스에 연결해둔다. 그러면 파일 시스템에서 reboot에 해당하는 sys call 이 발생하면 exception vector에서 sw interrupt 처리 함수로 들어와서 sys call 처리로 오게 된다. (/sbin/reboot 을 요청하는 건 busybox인데, reboot이 syscall 로 연결되는 건 glibc 라이브러리에 있다고 한다. 파일 시스템 구성 요소는 아직 파악하지 못하였다.)
+
 ### reboot syscall
 
 kernel에서 reboot할 때는 다음의 함수가 실행된다.
@@ -329,6 +331,10 @@ module_exit(Hook_Exit);
 ```
 
 
+
+[RHEL6] 시스템 관리 명령어 5탄(poweroff, reboot, runlevel, setup)
+
+https://chanchan-father.tistory.com/307
 
 
 
