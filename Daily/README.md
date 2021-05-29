@@ -4,6 +4,7 @@
 
 - 2021-04-11_Google_Repo.md
 - 2021-04-13_Git_format_patch.md
+- 2021-05-20_C_json.md
 
 ## Linux
 
@@ -15,6 +16,7 @@
 - 2021-05-09_Book_Linux_inside.md
 - 2021-05-12_CPU_mask.md
 - 2021-05-13_SoC_kernel.md
+- 2021-05-27_kernel_reboot_syscall.md
 
 ## Power Management
 
@@ -32,6 +34,7 @@
 - 2021-04-27_ARM_BUS_architecture.md
 - 2021-04-28_PCIe_Bus.md
 - 2021-05-15_Apple_Booting.md
+- 2021-05-26_ARM_Cache.md
 
 ## Algorithm
 
@@ -44,6 +47,7 @@
 ## Hypervisor
 
 - 2021-03-30_Hyp_vs_Docker.md
+- 2021-05-25_Dom0_DomU_kernel.md
 
 ## Useful Things
 
