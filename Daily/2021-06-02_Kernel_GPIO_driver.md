@@ -5,12 +5,22 @@
 device tree에서 다음과 같이 선언한다. 아래 예시의 nand_sel 과 같은 것은 GPIO 관련 device tree node로 미리 선언되어있어야한다.
 
 ```c
-driver이름: driver이름 {
+/{
+    pinctrl@address{
+        gpiogroup0: gpiogroup0 {
+            gpio-controller;
+            #gpio-cells = <2>;
+        }
+    }
+
+	driver이름: driver이름 {
                 ...
+        gpios = <&gpiogroup0 1 1>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&nand_sel &uart3_rx &sdio0_d4>;
                 ...
         }
+}
 ```
 
 http://jake.dothome.co.kr/pinctrl-2/
@@ -31,6 +41,8 @@ http://qwooowp.blogspot.com/2018/08/linux-gpio-control.html
 >    irq = platform_get_irq(pdev, 0);     /* device tree 내용으로 부터 151 irq 획득 */
 
 https://slowbootkernelhacks.blogspot.com/2017/05/yocto-project-linux-device-driver.html
+
+필요한 헤더는 `#include <linux/of_gpio.h>` 이다.
 
 
 
@@ -59,6 +71,18 @@ static inline bool gpio_is_valid(int number)
 ```
 
 https://linux.kernel.narkive.com/8PBZgoym/patch-introduce-is-valid-gpio-predicate-and-use-it-in-gpiolib-c
+
+이걸 사용해서 다음과 같이 코드를 작성하면 된다.
+
+```c
+data.gpio = of_get_gpio(pdev->dev.of_node, 0);
+if (!gpio_is_valid(data.gpio)) {
+    dev_err(&pdev->dev, "failed to get gpio\n");
+    return -EINVAL;
+}
+```
+
+필요한 헤더는 `#include <linux/gpio.h>` 이다.
 
 
 
