@@ -41,3 +41,15 @@ B value는 저항 온도 그래프에서 두 지점간 기울기를 뜻하는데
 https://setoo0922.tistory.com/253
 
 https://openstory.tistory.com/230
+
+
+
+### NTC
+
+저항의 온도 계수에 따라 써미스터는 크게 두 종류로 구분할 수 있다.
+
+(1) PTC: Positive Temperature Coefficient 저항이 온도 증가에 따라 증가함
+
+(2) NTC: Negative Temperature Coefficient 저항이 온도 증가에 따라 감소함
+
+https://openstory.tistory.com/157
