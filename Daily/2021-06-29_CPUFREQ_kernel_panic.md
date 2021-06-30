@@ -119,3 +119,9 @@ https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg2388004.html
 제목: [2/2] ide: Remove BUG_ON(in_interrupt() || irqs_disabled()) from ide_unregister()
 
 https://patchwork.ozlabs.org/project/linux-ide/patch/20201113161021.2217361-3-bigeasy@linutronix.de/
+
+
+
+[2021.06.30] 이슈 정리
+
+interrupt handler에서 pm qos update request를 하도록 하였다. 기존 cpufreq mainline code는 pm qos notifier가 없었는데, pm qos notifier를 직접 만들어서 달아두었다. 그 notifier에서 cpufreq target 값 변경 함수가 호출되게 하였는데, 거기서 BUG_ON(irqs_disabled()) 에 걸렸다. 여기서 걸리는 게 당연한게, 인터럽트 컨텍스트이기 때문에 DAIF 레지스터 (혹은 PSTATE의 DAIF 비트 필드) 의 I 가 masked 된 상태여서 그렇다. 그러므로 해결책으로는 pm qos update request를 하는게 아니라 work queue 같은 거로 추후에 호출되도록 해야할 것 같다.
