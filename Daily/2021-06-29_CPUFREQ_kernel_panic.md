@@ -125,3 +125,60 @@ https://patchwork.ozlabs.org/project/linux-ide/patch/20201113161021.2217361-3-bi
 [2021.06.30] 이슈 정리
 
 interrupt handler에서 pm qos update request를 하도록 하였다. 기존 cpufreq mainline code는 pm qos notifier가 없었는데, pm qos notifier를 직접 만들어서 달아두었다. 그 notifier에서 cpufreq target 값 변경 함수가 호출되게 하였는데, 거기서 BUG_ON(irqs_disabled()) 에 걸렸다. 여기서 걸리는 게 당연한게, 인터럽트 컨텍스트이기 때문에 DAIF 레지스터 (혹은 PSTATE의 DAIF 비트 필드) 의 I 가 masked 된 상태여서 그렇다. 그러므로 해결책으로는 pm qos update request를 하는게 아니라 work queue 같은 거로 추후에 호출되도록 해야할 것 같다.
+
+
+
+DAIF 레지스터의 I bit는 인터럽트가 발생하면 인터럽트의 중첩을 막기 위해 하드웨어에서 설정해준다.
+
+https://mycodebase.tistory.com/114
+
+ARM DAIF 레지스터 설명
+
+https://developer.arm.com/documentation/ddi0601/2021-03/AArch64-Registers/DAIF--Interrupt-Mask-Bits
+
+
+
+arch/arm64/kernel/entry.S를 보면 el1_irq에 DAIF 를 SW적으로 세팅하는 부분이 없다. (하드웨어적으로 세팅되는 것!)
+
+```c
+01 el1_irq:
+02     kernel_entry 1
+03     gic_prio_irq_setup pmr=x20, tmp=x1
+04     enable_da_f
+05 
+06 #ifdef CONFIG_ARM64_PSEUDO_NMI
+07     test_irqs_unmasked  res=x0, pmr=x20
+08     cbz x0, 1f
+09     bl  asm_nmi_enter
+10 1:
+11 #endif
+12
+13 #ifdef CONFIG_TRACE_IRQFLAGS
+14    bl  trace_hardirqs_off
+15 #endif
+16
+17    irq_handler
+```
+
+http://egloos.zum.com/rousalome/v/10010649
+
+
+
+하이퍼바이저 코드의 hyp_irq 에는 설정하는 것을 찾긴 했는데, T32로 확인해보면 SW로 설정하기 전부터 이미 설정되어있었다. 
+
+xen/arch/arm/arm64/entry.S
+
+```c
+hyp_irq:
+        entry   hyp=1
+
+        /* Inherit D, A, F interrupts and keep I masked */
+        mrs     x0, SPSR_el2
+        mov     x1, #(PSR_DBG_MASK | PSR_ABT_MASK | PSR_FIQ_MASK)
+        and     x0, x0, x1
+        orr     x0, x0, #PSR_IRQ_MASK
+        msr     daif, x0
+```
+
+https://git.nderjung.net/mirrors/xen/commit/3ed885a8874003f6011460f4f46d1d130dd6b2db
+
