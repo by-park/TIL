@@ -12,7 +12,7 @@ CPU 0
 start_xen
 ㄴset_processor_id(0)
 ㄴsmp_clear_cpu_maps // cpu_possible_map과 cpu_online_map에 0번 세팅
-ㄴset_up_mm
+ㄴsetup_mm
 ㄴsmp_init_cpus // dt parsing해서 cpu_possible_map에 추가
 ㄴgic_init
 ㄴsmp_prepare_cpus
@@ -57,17 +57,17 @@ CPU 0
 ```c
 start_kernel
 ㄴsmp_setup_processor_id
-ㄴboot_cpu_init
+ㄴboot_cpu_init // cpu_online_mask, active_mask, present_mask, possible_mask에 모두 setting
 ㄴsmp_prepare_boot_cpu
 ㄴmm_init
     ㄴarch_call_rest_init
    		ㄴrest_init
     		ㄴkernel_init
     			ㄴkernel_init_freeable
-    				ㄴsmp_prepare_cpus
+    				ㄴsmp_prepare_cpus(max_cpus)
     				ㄴdo_pre_smp_initcalls
     				ㄴsmp_init
-    					ㄴbringup_nonboot_cpus
+    					ㄴbringup_nonboot_cpus(max_cpus)
     						ㄴfor_each_present_cpu(cpu)
     							ㄴcpu_up(cpu) // ★ 여기서 CPU 1, 2, 3을 깨운다
 ```
@@ -82,8 +82,8 @@ secondary_entry
     ㄴ__secondary_switched
     	ㄴsecondary_start_kernel
     		ㄴcpuinfo_store_cpu
-    		ㄴnotify_cpu_starting
-    		ㄴset_cpu_online
+    		ㄴnotify_cpu_starting(cpu) // enable GIC and Timers
+    		ㄴset_cpu_online(cpu, true)
 ```
 
 cpu_up(cpu) 함수를 통해 CPU 1, 2, 3을 깨우면 위와 같은 path를 타는데, cpu_up(cpu) 함수 내부는 이렇게 동작한다.
@@ -92,7 +92,7 @@ cpu_up(cpu) 함수를 통해 CPU 1, 2, 3을 깨우면 위와 같은 path를 타�
 cpu_up(cpu)
 ㄴdo_cpu_up(cpu, CPUHP_ONLINE)
 	ㄴ_cpu_up(cpu, 0, CPUHP_ONLINE)
-    	ㄴbringup_cpu
+		ㄴbringup_cpu
     		ㄴ__cpu_up(cpu, idle)
     			ㄴboot_secondary(cpu, idle)
     				ㄴcpu_psci_up_boot(cpu) // psci를 보낼 때 entry point로 secondary_entry를 보낸다.
@@ -111,7 +111,7 @@ _start
 ㄴlk_main // thread init
     ㄴbootstrap2
     	ㄴarch_init
-    		ㄴlk_init_secondary_cpus(SMP_MAX_CPU-1)
+    		ㄴlk_init_secondary_cpus(SMP_MAX_CPUS-1)
 ```
 
 CPU 1, 2, 3
