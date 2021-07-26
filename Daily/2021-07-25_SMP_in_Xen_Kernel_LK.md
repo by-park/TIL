@@ -61,15 +61,15 @@ start_kernel
 ㄴsmp_prepare_boot_cpu
 ㄴmm_init
     ㄴarch_call_rest_init
-   		ㄴrest_init
-    		ㄴkernel_init
-    			ㄴkernel_init_freeable
-    				ㄴsmp_prepare_cpus(max_cpus)
-    				ㄴdo_pre_smp_initcalls
-    				ㄴsmp_init
-    					ㄴbringup_nonboot_cpus(max_cpus)
-    						ㄴfor_each_present_cpu(cpu)
-    							ㄴcpu_up(cpu) // ★ 여기서 CPU 1, 2, 3을 깨운다
+		ㄴrest_init
+			ㄴkernel_init
+				ㄴkernel_init_freeable
+					ㄴsmp_prepare_cpus(max_cpus)
+					ㄴdo_pre_smp_initcalls
+					ㄴsmp_init
+						ㄴbringup_nonboot_cpus(max_cpus)
+							ㄴfor_each_present_cpu(cpu)
+								ㄴcpu_up(cpu) // ★ 여기서 CPU 1, 2, 3을 깨운다
 ```
 
 CPU 1, 2, 3
@@ -93,9 +93,9 @@ cpu_up(cpu)
 ㄴdo_cpu_up(cpu, CPUHP_ONLINE)
 	ㄴ_cpu_up(cpu, 0, CPUHP_ONLINE)
 		ㄴbringup_cpu
-    		ㄴ__cpu_up(cpu, idle)
-    			ㄴboot_secondary(cpu, idle)
-    				ㄴcpu_psci_up_boot(cpu) // psci를 보낼 때 entry point로 secondary_entry를 보낸다.
+			ㄴ__cpu_up(cpu, idle)
+				ㄴboot_secondary(cpu, idle)
+					ㄴcpu_psci_up_boot(cpu) // psci를 보낼 때 entry point로 secondary_entry를 보낸다.
 ```
 
 
