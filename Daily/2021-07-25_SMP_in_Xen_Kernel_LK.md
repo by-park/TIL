@@ -133,3 +133,50 @@ LK는 xen과 kernel과 달리 SMP-aware kernel이라 LK 를 실행시킬 때 각
 - psci 보내는 함수 내부 확인
 - SMP 사용시 Virtual Memory 반드시 필요한지?
 - XEN에서 Kernel로 이어질 때 CPU가 이미 켜져있는데, 이걸 어떻게 처리한 것인지? 만일 LK 부터 SMP가 켜진 상태로 이어진다면 XEN에서 CPU가 이미 켜져있는 걸 어떻게 받아들여야할지?
+
+
+
+### SMP in Virtualization
+
+XEN에서 SMP 살릴 때는 cpu_up 함수를 이용해 실제로 CPU power를 켜주는데, kernel에서 HVC로 요청할 때는 vpsci 함수를 통해서 CPU power는 켜지 않지만 PC 값은 세팅해준다.
+
+xen/arch/arm/vpsci.c
+
+```c
+/*
+ * PSCI 0.2 or later calls. It will return false if the function ID is
+ * not handled.
+ */
+bool do_vpsci_0_2_call(struct cpu_user_regs *regs, uint32_t fid)
+{
+    /*
+     * /!\ VPSCI_NR_FUNCS (in asm-arm/vpsci.h) should be updated when
+     * adding/removing a function. SCCC_SMCCC_*_REVISION should be
+     * updated once per release.
+     */
+    switch ( fid )
+    {
+    case PSCI_0_2_FN32_PSCI_VERSION:
+        perfc_incr(vpsci_version);
+        PSCI_SET_RESULT(regs, do_psci_0_2_version());
+        return true;
+
+    case PSCI_0_2_FN32_CPU_OFF:
+        perfc_incr(vpsci_cpu_off);
+        PSCI_SET_RESULT(regs, do_psci_0_2_cpu_off());
+        return true;
+//생략
+    case PSCI_0_2_FN32_CPU_ON:
+    case PSCI_0_2_FN64_CPU_ON:
+    {
+        register_t vcpuid = PSCI_ARG(regs, 1);
+        register_t epoint = PSCI_ARG(regs, 2);
+        register_t cid = PSCI_ARG(regs, 3);
+
+        perfc_incr(vpsci_cpu_on);
+        PSCI_SET_RESULT(regs, do_psci_0_2_cpu_on(vcpuid, epoint, cid));
+        return true;
+    }
+
+```
+
