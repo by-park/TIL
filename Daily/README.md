@@ -17,6 +17,8 @@
 - 2021-05-12_CPU_mask.md
 - 2021-05-13_SoC_kernel.md
 - 2021-05-27_kernel_reboot_syscall.md
+- 2021-05-28_SWI_interrupt.md
+- 2021-06-02_Kernel_GPIO_driver.md
 
 ## Power Management
 
@@ -43,6 +45,7 @@
 - 2021-04-15_Number_Theory_for_Exam.md
 - 2021-04-16_Operator_precedence.md
 - 2021-04-21_Algorithm_Visualization.md
+- 2021-05-31_K-means_clustering.md
 
 ## Hypervisor
 
