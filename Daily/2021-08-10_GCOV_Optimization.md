@@ -22,6 +22,30 @@ https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
 
 
 
+### Optimization Disable
+
+Optimization 없애는 방법
+
+1. 함수에 다음 적용
+
+```c
+void __attribute__((optimize("O0"))) func(void) {
+}
+```
+
+2. 코드 범위 내에 다음 적용
+
+```c
+#pragma GCC push_options 
+#pragma GCC optimize ("O0") 
+//Write your code 
+#pragma GCC pop_options
+```
+
+https://sonseungha.tistory.com/522
+
+
+
 ### Q&A about GCOV coverage problem
 
 관련 Q&A 모음
