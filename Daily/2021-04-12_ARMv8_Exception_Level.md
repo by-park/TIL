@@ -55,3 +55,11 @@ ARMv8 Instruction Set Overview 에서 Wn 레지스터와 Xn 레지스터의 의�
 The letter W is shorthand for a 32-bit word, and X for a 64-bit extended word.
 
 [출처] https://www.element14.com/community/servlet/JiveServlet/previewBody/41836-102-1-229511/ARM.Reference_Manual.pdf
+
+
+
+(2021-08-20 내용 추가)
+
+ARM 관련 지식 습득을 위해서 ARM 문서 메뉴얼로 공부하면 좋다는 추천을 받았는데, ARM Cortex-M3 한글 번역한 블로그 링크를 저장해둔다.
+
+https://dhpark1212.tistory.com/entry/ARM-Product-%EA%B4%80%EB%A0%A8-%EB%AC%B8%EC%84%9C
