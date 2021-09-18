@@ -24,3 +24,10 @@ Precalculus
 
 [https://www.khanacademy.org/math/precalculus](https://www.khanacademy.org/math/precalculus?fbclid=IwAR3s73geFr7NF5nfNrEXaFknP8-BX4L-1Gnpe5_5cf68cPcayMLp6znxeDY)
 
+
+
+Khan Academy
+
+kids 용 말고 일반적인 수학 공부 가능
+
+https://ko.khanacademy.org/
