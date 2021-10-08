@@ -57,3 +57,11 @@ cf)
 Linux 의 CONFIG 자세한 설명 사이트
 
 https://cateee.net/lkddb/web-lkddb/PM_DEVFREQ.html
+
+
+
+중국어로 되어있지만 그림과 코드가 자세한 설명 사이트
+
+Linux Thermal Framework 설명 게시글
+
+https://www.cnblogs.com/arnoldlu/p/11207142.html
