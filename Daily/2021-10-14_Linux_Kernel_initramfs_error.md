@@ -1,4 +1,4 @@
-# 2021-10-14 (initramfs)
+# 2021-10-14 (initramfs error)
 
 fp 가 없는데 64 bit 인 임베디드 환경에서, 64 bit kernel & 64 bit file system 을 쓰면 부팅하다가 문제가 발생하였다. file system에서 소수점 연산이 필요한 것으로 보인다. 그래서 fp 제거 빌드를 하려고 하였으나 컴파일시 에러가 너무 많이 발생해서 32 bit file system 으로 사용하려고 한다.
 
