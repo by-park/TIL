@@ -19,6 +19,8 @@ $ file 컴파일러경로
 /컴파일러경로/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc: ELF 64-bit LSB executable, x86_64, version 1 (GNU/Linux), dynamically linked, interpreter /다른 경로/x86_64-pokysdk-linux/lib/ld-linux-x86_64.so.2, BUILDID[sha1]={hash값}, for GNU/Linux 3.2.0, stripped
 ```
 
+=> 해결 방법 `interpreter ~` 뒤에 나오는 경로대로 파일 경로를 맞춰주었더니 해결되었다.
+
 
 
 Yocto 컴파일러를 직접 받아서 설치하는 방법은 아래 링크에서 확인할 수 있다.
@@ -80,7 +82,7 @@ SyntaxError: invalid syntax
 
 https://coinpipe.tistory.com/96
 
-python 2로 해도 어디선가 에러가 나고, python 3로 해도 어디선가 에러가 발생하였다. (아직 해결 진행 중)
+python 2로 해도 어디선가 에러가 나고, python 3로 해도 어디선가 에러가 발생하였다.
 
 
 
@@ -91,4 +93,36 @@ Linux 서버 환경에서 python 기본 버전을 2와 3 중에서 선택하는 
 ```shell
 $ update-alternatives --config python
 ```
+
+
+
+(2021.11.17 업데이트)
+
+로컬 버전의 repo 가 2.9, 필요한 repo 가 2.15.2 인 듯하다.
+
+아래 방법을 이용하여 업데이트해준다.
+
+```shell
+$ curl http://commondatastorage.googleapis.repo-downloads/repo > ~/bin/repo
+$ chmod a+x ~/bin/repo
+$ vim ~/.bashrc
+export PATH=~/bin:$PATH
+```
+
+https://coinpipe.tistory.com/96
+
+그리고 내가 사용하는 repo init 에 들어가는 repo 가 `.repo/repo/main.py` 가 3.6 이 필요한 거 같아서 python3 기본 버전을 3.6 으로 바꿔주었다.
+
+```shell
+root@irshad:/usr/bin# unlink python
+root@irshad:/usr/bin# ln -s /usr/bin/python3.6 python3
+root@irshad:/usr/bin# python3 --version
+Python 3.6.8
+```
+
+http://daplus.net/unix-%EC%9A%B0%EB%B6%84%ED%88%AC%EC%97%90%EC%84%9C-python3-%EA%B8%B0%EB%B3%B8-%EB%B2%84%EC%A0%84-%EB%B3%80%EA%B2%BD/
+
+위와 같이 조치 후 문제가 해결되었다.
+
+python 2 문법을 사용하는 repo 와 python 3 문법을 사용하는 repo 가 있는데, 내 로컬에 설치되어있던 repo 가 python 2만 지원하는 거여서, 위 방법으로 repo 를 업그레이드하였더니 python 3 용 repo init도 할 수 있었다.
 
