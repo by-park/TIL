@@ -96,6 +96,16 @@ $ update-alternatives --config python
 
 
 
+내 repo 를 과거로 돌리려면 아래 명령어를 사용해야한다. (ex. 컴파일러 버전을 중간에 바꾼 경우 과거 버전을 찾기 위해)
+
+```shell
+$ repo forall -c git reset --hard {git_tag_id}
+```
+
+
+
+
+
 (2021.11.17 업데이트)
 
 로컬 버전의 repo 가 2.9, 필요한 repo 가 2.15.2 인 듯하다.
@@ -126,3 +136,14 @@ http://daplus.net/unix-%EC%9A%B0%EB%B6%84%ED%88%AC%EC%97%90%EC%84%9C-python3-%EA
 
 python 2 문법을 사용하는 repo 와 python 3 문법을 사용하는 repo 가 있는데, 내 로컬에 설치되어있던 repo 가 python 2만 지원하는 거여서, 위 방법으로 repo 를 업그레이드하였더니 python 3 용 repo init도 할 수 있었다.
 
+
+
+repo init 명령어 예시
+
+```shell
+repo init -u ssh://{xml 저장된 내 git - 이름을 repo로 지었다}/repo -b my_repo_thud -m xmldir/my_repo_en.xml --repo-url=ssh://{최신 레포 말고 repo 를 땡겨둔 내 git}/repo.git
+```
+
+m 옵션은 저장소에서 manifest file을 선택하는 옵션이다. 어떤 manifest 이름도 선택되지 않으면 default.xml 을 선택하게 된다.
+
+https://sincenwhile.tistory.com/entry/repo-init-sync-%EC%98%B5%EC%85%98%EB%93%A4
