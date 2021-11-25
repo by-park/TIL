@@ -91,7 +91,9 @@ int cpu_up(unsigned int cpu)
 }
 ```
 
+dump_stack() 에 대한 설명
 
+http://egloos.zum.com/rousalome/v/9992691
 
 
 
