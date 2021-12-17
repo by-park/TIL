@@ -106,3 +106,26 @@ https://www.youtube.com/user/schezokim
 ### Linux System Call Table
 
 https://thevivekpandey.github.io/posts/2017-09-25-linux-system-calls.html
+
+
+
+(2021.12.17 내용 추가)
+
+kernel 에서 CPU Hotplug out sysfs node 명령어를 입력하였을 때 (위의 예시 참고),
+
+해당 CPU 가 idle 루프에 들어가게 되면 EL2 (가상화가 아니라면 EL3로) 로 cpu 를 끄는 psci 가 내려간다.
+
+하지만 xen 에서는 실제로 power를 끄지는 않는다.
+
+![211217_CPU_hotplug_kernel](images/211217_CPU_hotplug_kernel.PNG)
+
+
+
+xen 코드 내에서는 CPU Hotplug driver가 보이지 않는다.
+
+S2R 할 때 사용할 수 있는 루트는 보인다. non boot cpu 들을 끄는 함수에서 cpu_down 을 호출하고, 그러면 kernel 과 같은 방식으로 (xen 이 kernel 을 베이스로 만들어져서) 해당 CPU가 idle 에 진입하였을 때, EL3로 cpu off psci 가 전달된다.
+
+![211217_CPU_hotplug_kernel](images/211217_CPU_hotplug_xen.PNG)
+
+
+
