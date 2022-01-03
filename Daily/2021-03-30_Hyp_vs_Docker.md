@@ -8,6 +8,22 @@ Hypervisor는 Hypervisor 위에 Guest OS가 올라가서 각 Guest OS 들이 완
 
 ![img](https://miro.medium.com/max/700/1*wOBkzBpi1Hl9Nr__Jszplg.png)
 
+
+
+### 전가상화 반가상화 비교 분석 (Xen vs. KVM)
+
+> Xen의 “하이퍼바이저 위에서 모두 놀아라.” 라던지, KVM의 “커널이 곧 하이퍼바이저이다.”
+
+=> 현재는 둘 모두 전가상화와 반가상화 기능을 지원해서 이런 구분이 의미가 없어졌다.
+
+![img](https://www.itopening.com/wp-content/uploads/2020/01/Xen-kvm-%EB%B0%98%EA%B0%80%EC%83%81%ED%99%94-%EC%A0%84%EA%B0%80%EC%83%81%ED%99%94-3.png)
+
+![img](https://www.itopening.com/wp-content/uploads/2020/01/Xen-kvm-%EB%B0%98%EA%B0%80%EC%83%81%ED%99%94-%EC%A0%84%EA%B0%80%EC%83%81%ED%99%94-2.png)
+
+https://www.itopening.com/4396/
+
+
+
 (참고)
 
 https://medium.com/@darkrasid/docker%EC%99%80-vm-d95d60e56fdd
