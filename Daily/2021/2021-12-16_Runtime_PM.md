@@ -41,3 +41,6 @@ clock 은 domain 단위로 가는 것이 아니므로 clock gating 도 위에 �
 
 
 
+### kernel 공식 문서 Runtime PM 번역본
+
+https://blog.dasomoli.org/442/
