@@ -84,6 +84,16 @@ https://developer.arm.com/documentation/102142/0100
 
 
 
+### Xen power management
+
+![Xenpm-fig-2.png](https://wiki.xenproject.org/images/e/e3/Xenpm-fig-2.png)
+
+cpufreq 및 cpuidle 에 대한 설명 있음
+
+https://wiki.xenproject.org/wiki/Xen_power_management
+
+
+
 xen 에서 지정한 error macro
 
 xen/include/public/errno.h
