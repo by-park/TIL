@@ -84,6 +84,18 @@ https://developer.arm.com/documentation/102142/0100
 
 
 
+### XEN 관련 정리하는 블로그
+
+http://www.wowotech.net/pm_subsystem/cpuidle_overview.html
+
+https://blog.csdn.net/snailhit/category_770903.html
+
+(위 링크 중 예시글 1개 https://blog.csdn.net/snailhit/article/details/6107279)
+
+http://blog.sina.com.cn/s/blog_8b6348eb01017ubr.html
+
+
+
 ### Xen power management
 
 ![Xenpm-fig-2.png](https://wiki.xenproject.org/images/e/e3/Xenpm-fig-2.png)
