@@ -32,6 +32,37 @@ https://blog.dasomoli.org/222/
 
 
 
+```c
+// arch/arm/include/asm/barrier.h
+
+#define isb(option) __asm__ __volatile__ ("isb " #option : : : "memory")
+#define dsb(option) __asm__ __volatile__ ("dsb " #option : : : "memory")
+#define dmb(option) __asm__ __volatile__ ("dmb " #option : : : "memory")
+```
+
+> - DMB, DSB, ISB의 세 명령
+> - ARMv6까지는 CP15 레지스터를 이용하여 명령을 수행하지만 ARMv7부터는 전용 명령을 사용한다.
+
+https://outoftheblackbox.site/Assembly-Barrier-instruction/
+
+https://tot0rokr.github.io/arm64/barrier/pipeline-barrier-isb-dmb-dsb-ordering/
+
+sy 가 default 옵션이라고 한다. 위의 매크로를 사용하지 않고 간단하게 쓴다면 `asm volatile ("dmb sy");`, `asm volatile("dsb sy");`, `asm volatile("isb sy")` 와 같은 식으로 작성할 수 있을 것이다.
+
+
+
+cf) c에서 assem keyword 사용 방법
+
+https://stackoverflow.com/questions/52550016/difference-between-asm-and-asm-in-kernel-code
+
+
+
+cf) kernel 코드 내에 barrier 가 필요한 것인지 관련 질문
+
+http://www.iamroot.org/xe/index.php?mid=Knowledge&document_srl=213162
+
+
+
 ### volatile
 
 특정 변수를 최적화하지 않는 방법
