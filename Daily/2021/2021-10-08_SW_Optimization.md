@@ -117,3 +117,9 @@ void combine6(vec_ptr v, data_t *dest) {
 전체2: https://koyo.kr/post/csapp-optimizing-program-2/
 
 Loop unrolling: https://skyul.tistory.com/36
+
+
+
+### C 코드 최적화 (씹어먹는 C 언어)
+
+https://modoocode.com/129
