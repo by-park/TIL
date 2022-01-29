@@ -140,8 +140,11 @@ typedef struct timer {
 
 
 - CPU 마다 하나의 HW timer와 timer 구조체를 담는 Double Linked List를 가짐
-
 - 일정 주기 마다 HW timer의 handle가 실행되고, 현재 시간과 비교하여 처리 되어야할 timer 구조체를 처리
+
+![220125_LK_thread](images/220125_LK_thread.PNG)
+
+
 
 
 
