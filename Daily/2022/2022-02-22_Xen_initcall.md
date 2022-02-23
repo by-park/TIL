@@ -6,6 +6,8 @@ xen 에서 late_initcall 이 필요해서 직접 만들어보았다.
 
 (2) x86 에 추가가 필요할지?
 
+(3) presmp initcall 은 앞에 __ 가 없는데, initcall 은 __가 있는 이유?
+
 
 
 https://github.com/BY1994/xen/commit/6b745daa4a8b8d5af2d84b57aec13246a1947cdc
@@ -103,4 +105,16 @@ index bfe789e93f..4586b0d4a3 100644
 
  #endif /* __ASSEMBLY__ */
 ```
+
+
+
+Xen 에 질문하는 방법
+
+https://wiki.xenproject.org/wiki/Asking_Developer_Questions
+
+
+
+Xen 에 Patch 기여하는 방법
+
+https://wiki.xenproject.org/wiki/Submitting_Xen_Project_Patches
 
