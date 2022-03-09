@@ -114,6 +114,8 @@ Block Diagram 은 Data sheet 참고 (Jacinto6Eco): https://www.ti.com/product/DR
 
 voltage supply 연결 참고(i.MX6ULL Power Consumption Application Note): https://www.nxp.com/docs/en/application-note/AN5345.pdf
 
+오랫동안 사용하지 않아서 핸드폰의 화면이 자동으로 꺼지거나, 노트북의 화면이 꺼졌을 때는 왠만한 부분의 Power 는 꺼져있다.
+
 
 
 ## 4. Linux Power Feature (framework)
@@ -124,9 +126,8 @@ https://lwn.net/Articles/439336/
 
 ### (1) Static Power
 
-		- Suspend To RAM
-		- Runtime PM
-
+- Suspend To RAM
+- Runtime PM
 - CPUIDLE: C1, C2, C3
 - CPU Hotplug
 
