@@ -136,9 +136,29 @@ Cortex-M 3 이나 4 는 VTOR 레지스터 사용
 
 https://developer.arm.com/documentation/101273/0101/Cortex-M55-Processor-level-components-and-system-registers---Reference-Material/System-Control-and-Implementation-Control-Block/Vector-Table-Offset-Register
 
+https://developer.arm.com/documentation/dui0552/a/cortex-m3-peripherals/system-control-block/vector-table-offset-register
+
 `SCB->VTOR` 이며 주소는 `0xE000ED08`이다.
 
 ![img](https://documentation-service.arm.com/static/61953ad3f45f0b1fbf3a8cd1?token=)
+
+Non secure 용 VTOR 주소는 `0xE000ED08` 이고, Secure 용 VTOR 주소는 `0xE002ED08` 이다.
+
+https://www.keil.com/support/man/docs/uv4/uv4_cp_armv8_nvic.htm
+
+ARM manual 을 보면 VTOR reset value 는 unknown 이다.
+
+https://developer.arm.com/documentation/100235/0004/the-cortex-m33-peripherals/system-control-block/system-control-block-registers-summary?lang=en
+
+VTOR 의 reset  value는 0 이라는 답변
+
+https://stackoverflow.com/questions/43577121/vtor-usage-in-arm-m3
+
+VTOR 의 기본값은 칩 설계자에 의해 정의된다.
+
+https://www.elec4.co.kr/article/articleView.asp?idx=17179
+
+https://discourse-production.oss-cn-shanghai.aliyuncs.com/original/3X/a/2/a2c6f2922ad7fd61a9dd333a0931608d124a90d9.pdf
 
 
 
@@ -181,3 +201,22 @@ extern const pFunc __VECTOR_TABLE[240];
 };
 ```
 
+제일 첫번째에는 Stack Pointer 위치가 들어있는데, reset 시에 프로세서는 이 위치 (0x00000000) 에 있는 값을 MSP (Main Stack Pointer) 레지스터에 넣는다.
+
+https://stackoverflow.com/questions/60452383/behaviour-of-vtor-register-on-stm32h7-at-reset
+
+ARM의 Cortex-M 프로세서를 쓰면 Reset 동작 시에 0x0 위치에 있는 것은 자동으로 SP 에 들어가고, 0x4 위치에 있는 것은 PC 로 옮겨줘서 어셈 없이 c 파일로만 코드를 짤 수 있다.
+
+Vector table
+
+https://developer.arm.com/documentation/dui0552/a/the-cortex-m3-processor/exception-model/vector-table
+
+![Figure 2.2. Vector table](https://documentation-service.arm.com/static/5ea823e69931941038df1b02?token=)
+
+https://www.elec4.co.kr/article/articleView.asp?idx=17179
+
+![img](http://elec4.co.kr/photo/2017/170504Design-ARM1.jpg)
+
+Cortex-M 의 인터럽트 컨트롤러 NVIC
+
+![img](https://www.elec4.co.kr/photo/2017/170504Design-ARM2.jpg)
