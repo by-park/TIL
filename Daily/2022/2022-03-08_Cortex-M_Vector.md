@@ -1,4 +1,4 @@
-# 2022-03-08 (Cortex-M Compile)
+# 2022-03-08 (Cortex-M Vector)
 
 Arm Cortex M Compile
 
@@ -146,6 +146,8 @@ Non secure 용 VTOR 주소는 `0xE000ED08` 이고, Secure 용 VTOR 주소는 `0x
 
 https://www.keil.com/support/man/docs/uv4/uv4_cp_armv8_nvic.htm
 
+https://community.arm.com/support-forums/f/architectures-and-processors-forum/13353/how-to-change-the-non-secure-vtor-cortex-m33
+
 ARM manual 을 보면 VTOR reset value 는 unknown 이다.
 
 https://developer.arm.com/documentation/100235/0004/the-cortex-m33-peripherals/system-control-block/system-control-block-registers-summary?lang=en
@@ -220,3 +222,17 @@ https://www.elec4.co.kr/article/articleView.asp?idx=17179
 Cortex-M 의 인터럽트 컨트롤러 NVIC
 
 ![img](https://www.elec4.co.kr/photo/2017/170504Design-ARM2.jpg)
+
+Cortex M 리셋시의 동작
+
+https://openmicrolab.com/arm-cortex-m0-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/
+
+> 프로세서가 리셋이 되면 다음과 같은 순서로 동작을 한다.
+>
+> 1. 0x00000000 번지에 저장이 되어 있는 MSP의 초기값을 읽는다. MSP의 초기값 = 스텍의 시작 번지
+>
+> 2. 0x00000004 번지에 저장이 되어 있는 리셋 벡터를 읽는다.
+>
+> 3. 리셋 벡터에 저장된 번지의 명령어를 패치한다.
+>
+> 만약 부트코드가 0x000000C0 번지부터 시작을 하면, Thumb 코드임을 나타내기 위하여 최하위 비트를 1로 설정한 값이 리셋 벡터에 저장이 되어 있어야 한다.
