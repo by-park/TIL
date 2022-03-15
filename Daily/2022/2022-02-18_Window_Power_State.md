@@ -1,5 +1,13 @@
 # 2022-02-18 (Window Power State)
 
+## ACPI in window
+
+ACPI State Relationship
+
+http://liujunming.top/2020/02/20/Introduction-to-power-management/
+
+![img](http://liujunming.top/images/2020/02/13.PNG)
+
 Window Device Power States
 
 https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/device-power-states
@@ -21,6 +29,48 @@ https://docs.microsoft.com/en-us/windows-hardware/drivers/network/cellular-archi
 ![windows 10 cellular architecture.](https://docs.microsoft.com/en-us/windows-hardware/drivers/network/images/cellular_mbb_driver_architecture.png)
 
 
+
+Intel ACPI Power States
+
+https://metebalci.com/blog/a-minimum-complete-tutorial-of-cpu-power-management-c-states-and-p-states/
+
+![Processor Power States of Intel Xeon Processor E3-1200 v5 Product Family](https://metebalci.com/img/blog/processor-power-states-figure-4-1.png)
+
+Designing Systems Without a Suspend Supply 문서 (Intel)
+
+https://www.intel.com/content/dam/www/public/us/en/documents/white-papers/systems-without-suspend-supply-paper.pdf
+
+
+
+Intel CPU 파헤치기
+
+(상) http://www.hwbattle.com/bbs/board.php?bo_table=tipntech&wr_id=994
+
+(하) http://www.hwbattle.com/bbs/board.php?bo_table=tipntech&wr_id=1028
+
+
+
+## ACPI in Linux
+
+https://junyelee.blogspot.com/2020/10/linux-power-management.html
+
+![img](https://blogger.googleusercontent.com/img/a/AVvXsEjxXs3nV1kbMvk_9PFDxTP2H9g64cy2fH4rNXHhyT-v84zA4o92G0WB0eOFS4YMQVanDeVY6speshkcK5sTKpcoES-jNsZNpezNZBZ1fhlxKNhSJ9bxr6gHXB6sihE_LmxfMK0vNJo-YKVZ-2FVBquzq7or3Ycx3MOIDv7NmG5FAOOUm2hGVMdpezvdMQ)
+
+Linux Kernel Power Management (PM) Framework for ARM 64-bit Processors
+
+https://events.static.linuxfound.org/sites/events/files/slides/lp-linuxcon14.pdf
+
+
+
+SOIX States in Linux
+
+https://01.org/blogs/qwang59/2018/how-achieve-s0ix-states-linux
+
+![State diagram](https://01.org/sites/default/files/resize/users/u32403/statediagram-391x400.png)
+
+
+
+## PCIe State
 
 PCIe Link State Power Management
 
@@ -128,3 +178,31 @@ https://kbench.com/?q=node/696
 window 10 development for absolute beginners
 
 https://blogs.windows.com/windowsdeveloper/2015/09/30/windows-10-development-for-absolute-beginners/
+
+
+
+## USB State
+
+USB 3.0 Link State
+
+![img](https://www.embedded.com/wp-content/uploads/media-1112238-1110esdmichelettit02.gif)
+
+
+
+USB Suspend Current Powered State
+
+http://www.testusb.com/power_issue.htm
+
+![powered suspend](http://www.testusb.com/images/powered%20suspend%20state.jpg)
+
+
+
+참고
+
+Zephyr RTOS power management 문서
+
+https://docs.zephyrproject.org/2.6.0/reference/power_management/index.html
+
+ACRN hypervisor power management 문서
+
+https://projectacrn.github.io/latest/developer-guides/hld/hld-power-management.html
