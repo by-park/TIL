@@ -39,6 +39,39 @@ void kernel_power_off(void)
 EXPORT_SYMBOL_GPL(kernel_power_off);
 ```
 
+kernel_shutdown_prepare 에 보면 reboot_notifier 와 device shutdown 이 불린다.
+
+// kernel/reboot.c
+
+```c
+static void kernel_shutdown_prepare(enum system_states state)
+{
+        blocking_notifier_call_chain(&reboot_notifier_list,
+                (state == SYSTEM_HALT) ? SYS_HALT : SYS_POWER_OFF, NULL);
+        system_state = state;
+        usermodehelper_disable();
+        device_shutdown();
+}
+```
+
+reboot_notifier 로 호출되기 위해서는  `register_reboot_notifier` 함수를 통해 등록하면 된다. device shutdown 안에서는 driver 에서 `.shutdown` 으로 등록된 것들이 불린다.
+
+// 예시 drivers/regulator/act8945a-regulator.c
+
+```c
+static struct platform_driver act8945a_pmic_driver = {
+        .driver = {
+                .name = "act8945a-regulator",
+                .pm = &act8945a_pm,
+        },
+        .probe = act8945a_pmic_probe,
+        .shutdown = act8945a_pmic_shutdown,
+};
+module_platform_driver(act8945a_pmic_driver);
+```
+
+machine_restart 와 machine_power_off 으로 진입하면 아래와 같다.
+
 // arch/arm64/kernel/process.c
 
 ```c
