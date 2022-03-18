@@ -56,6 +56,8 @@ static void kernel_shutdown_prepare(enum system_states state)
 
 reboot_notifier 로 호출되기 위해서는  `register_reboot_notifier` 함수를 통해 등록하면 된다. device shutdown 안에서는 driver 에서 `.shutdown` 으로 등록된 것들이 불린다.
 
+cf) `.poweroff` 는 Hibernation 용 callback 이다. "drivers/base/power/main.c" 의 `PM_EVENT_HIBERNATE` 참고
+
 // 예시 drivers/regulator/act8945a-regulator.c
 
 ```c
