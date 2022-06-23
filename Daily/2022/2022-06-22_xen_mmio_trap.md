@@ -24,7 +24,21 @@ static const struct mmio_handler_ops vuart_mmio_handler = {
 
 mmio 로 접근하는 주소는 보통 32 bit 이지만, OS 에서 구조체 형식으로 선언해서 접근하는 경우, 컴파일러가 32 bit 보다 작게 접근하기도 한다. 그러면 `ldrb`, `ldrh`, `ldr` 등으로 구분된다. write도 `strb`, `strh`, `str` 이 있다. 
 
-이걸 info 에서 dabt size를 이용해서 확인할 수 있었다. 
+```c
+struct {
+    reg32_t
+        a:1, // [0]
+    	b:1, // [1]
+    	c:3, // [4:2]
+    	d:4, // [8:5]
+    	e:5, // [13:9]
+    	f:18; // [31:14]
+} MEMORY_REGION;
+```
+
+
+
+어떤 사이즈로 메모리 접근을 시도했는지를 info 에서 dabt size를 이용해서 확인할 수 있었다. 
 
 // xen/arch/arm/include/asm/mmio.h
 
@@ -187,3 +201,33 @@ https://developer.arm.com/documentation/ddi0460/d/Programmers-Model/Exceptions/A
 \+ Microsoft MMIO Access 관련 설명 페이지
 
 https://docs.microsoft.com/ko-kr/virtualization/api/hypervisor-instruction-emulator/funcs/mmioaccessie
+
+\+ 레지스터 구조체로 표현하는 예시
+
+```c
+typedef union {
+  uint32_t l;
+  uint16_t w[2];
+  uint8_t  b[4];
+} reg32_t;
+
+typedef struct {
+  uint16_t gs;			/* Offset  0 */
+  uint16_t fs;			/* Offset  2 */
+  uint16_t es;			/* Offset  4 */
+  uint16_t ds;			/* Offset  6 */
+
+  reg32_t edi;			/* Offset  8 */
+  reg32_t esi;			/* Offset 12 */
+  reg32_t ebp;			/* Offset 16 */
+  reg32_t _unused_esp;		/* Offset 20 */
+  reg32_t ebx;			/* Offset 24 */
+  reg32_t edx;			/* Offset 28 */
+  reg32_t ecx;			/* Offset 32 */
+  reg32_t eax;			/* Offset 36 */
+
+  reg32_t eflags;		/* Offset 40 */
+} com32sys_t;
+```
+
+https://www.syslinux.org/old/comboot.php
