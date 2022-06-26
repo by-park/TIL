@@ -172,6 +172,38 @@ https://askubuntu.com/questions/1054273/script-in-lib-systemd-system-sleep-delet
 
 
 
+## suspend 와 resume 때 실행시킬 스크립트
+
+/etc/systemd/system/mysyssuspend.service
+
+```
+[Unit]
+Before=suspend.target
+[Service]
+Type=simple
+StandardOutput=syslog
+ExecStart=/bin/date +'mysyssuspend start %%H:%%M:%%S'
+[Install]
+WantedBy=suspend.target
+```
+
+/etc/systemd/system/mysysresume.service
+
+```
+[Unit]
+After=suspend.target
+[Service]
+Type=simple
+StandardOutput=syslog
+ExecStart=/bin/date +'mysysresume start %%H:%%M:%%S'
+[Install]
+WantedBy=suspend.target
+```
+
+https://unix.stackexchange.com/questions/619987/stop-systemd-service-before-suspend-start-again-after-resume
+
+
+
 ## Systemd 의 suspend 소스코드
 
 ### suspend.target
@@ -233,3 +265,18 @@ suspend.target
 ```
 
 https://unix.stackexchange.com/questions/337853/how-can-i-trigger-a-systemd-unit-on-suspend-before-networking-is-shut-down
+
+
+
+### 참고
+
+안드로이드의 suspend/resume 설명
+
+> 기존 리눅스 Suspend 와 다른 점
+>
+> 프로세스를 Freezing 할 때 안드로이드는 wake lock 이 있는지 확인하고, wake lock 이 있는 경우 suspend 과정이 실행되지 않는다.
+
+https://rnathsus.tistory.com/263
+
+systemd-notify 를 활용할 수 있을지 찾아보기
+
