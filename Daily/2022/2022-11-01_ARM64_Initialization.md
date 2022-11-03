@@ -955,3 +955,9 @@ https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=kangyunmoon&
 ### * QEMU 로 디버깅
 
 https://m.blog.naver.com/rlawlxo1064/221621552737
+
+https://elinux.org/Kernel_Debugging_Tips
+
+http://issaris.blogspot.com/2007/12/download-linux-kernel-sourcecode-from.html
+
+![img](http://4.bp.blogspot.com/_5GXxEBP1qng/R2KpI7bw5kI/AAAAAAAAAEg/fnAIu_T3TeI/s1600/screenshot025.png)
