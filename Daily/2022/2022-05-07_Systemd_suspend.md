@@ -40,6 +40,14 @@ systemd 가 pid 1 일 때
 
 ![img](https://t1.daumcdn.net/cfile/tistory/994DE7465C239F4730)
 
+### Systemd 구조
+
+![Systemd components.png](https://wiki.dave.eu/images/2/23/Systemd_components.png)
+
+https://wiki.dave.eu/index.php/XELK-AN-008:_How_to_use_systemd_on_an_Embedded_system
+
+
+
 ### Systemd unit file 종류
 
 - **`.service`**: A service unit describes how to manage a service or application on the server. This will include how to start or stop the service, under which circumstances it should be automatically started, and the dependency and ordering information for related software.
