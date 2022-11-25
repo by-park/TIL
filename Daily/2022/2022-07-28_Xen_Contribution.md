@@ -32,6 +32,10 @@ https://xen.markmail.org/search/?q=boyoun.park#query:boyoun.park+page:1+mid:uu6j
 
 https://xen.markmail.org/search/?q=boyoun.park#query:boyoun.park+page:1+mid:zs45gwseuc2qdqvf+state:results
 
+smtp 서버 사용할 수 없을 때 대체재에 대해 git 메일링 리스트에 문의했으나 답변은 받지 못했다.
+
+https://groups.google.com/g/git-users/c/SHClXYs8pbk/m/iur-vjWOAAAJ
+
 
 
 ### xen 에 contribution 시도 (2022.07.28)

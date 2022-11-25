@@ -24,6 +24,8 @@ http://www.jkelec.co.kr/img/lecture/cortex_arch/cortex_arch_2.html
 
 https://class.ece.uw.edu/474/peckol/doc/StellarisDocumentation/IntroToCortex-M3.pdf
 
+https://www.elec4.co.kr/article/articleView.asp?idx=17403
+
 
 
 ### Cortex M3 에서 main 호출 방법
