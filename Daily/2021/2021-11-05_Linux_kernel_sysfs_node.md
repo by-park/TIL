@@ -81,6 +81,10 @@ static void __init my_debugfs_init(void) {
 
 내가 만든 코드 예시 (`/sys/class/my_sample/my_sample_rw`)
 
+`my_sample_rw_store` 내부는 아래 링크의 예시 코드를 참고하였다.
+
+https://decdream.tistory.com/351
+
 ```c
 #include <linux/device.h>
 
@@ -88,7 +92,12 @@ static ssize_t my_sample_rw_show(struct class *d, struct class_attribute *attr, 
     return snprintf(buf, PAGE_SIZE, "what i want to print\n");
 }
 
-// my_sample_rw_store function
+static ssize_t my_sample_rw_store(struct class *d, struct class_attribute *attr, const char *buf, size_t count) {
+    int value;
+    sscanf(buf, "%d", &value);
+    printk("%s() value=%d\n", __func__, value);
+    return count;
+}
 
 static CLASS_ATTR_RW(my_sample_rw)
 
@@ -114,7 +123,33 @@ cf) `PAGE_SIZE`는 `include/asm-generic/page.h` 참고
 
 ### (3) device sysfs 만드는 방법
 
-이것은 생성되는 경로는 확인하지 못하였다.
+이것은 `/sys/devices/platform/{dt에 적힌 이름 ex.00000000.pcie}/` 밑에 생긴다.
 
 `include/linux/device.h` 의 `DEVICE_ATTR`도 참고해서 만들 수 있다.
+
+probe 함수 안에서 아래와 같이 file 을 생성한다.
+
+```c
+ret = device_create_file(dev, &dev_attr_my_sample);
+if (ret) {
+    dev_err(dev, "%s: couldn't create device file for my sample(%d)\n", __func__, ret);
+	return ret;
+}
+```
+
+my sample 의 attr 은 아래와 같이 만들 수 있다.
+
+```c
+static ssize_t my_sample_show(struct device *dev, struct device_attribute *attr, char *buf) {
+    return snprintf(buf, PAGE_SIZE, "what i want to print\n");
+}
+
+static ssize_t my_sample_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t count) {
+    int val;
+    if (sscanf(buf, "%d", &val) == 0) //do something
+    return count;
+}
+
+static DEVICE_ATTR(my_sample, 0644, my_sample_show, my_sample_store);
+```
 
