@@ -22,6 +22,7 @@
 - 2022-07-21_C++_STL.md
 - 2022-07-25_Flask_install.md
 - 2022-07-29_nginx.md
+- 2022-12-14_TTS_Project.md
 
 ## Linux
 
@@ -55,6 +56,7 @@
 - 2022-04-22_GIC_v3_Register.md
 - 2022-08-18_NAND_Flash_github.md
 - 2022-11-03_SCP_Firmware.md
+- 2022-12-28_DMIPS.md
 
 ## Hypervisor
 
@@ -70,3 +72,4 @@
 
 - 2022-01-04_T32_Bus_error.md
 - 2022-06-23_Frame_Pointer_Register.md
+- 2022-11-30_mmc_suspend_and_resume.md (CPU Hard Lockup)
