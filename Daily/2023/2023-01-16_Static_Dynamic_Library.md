@@ -184,3 +184,140 @@ http://www.jiniya.net/wp/archives/10447
 ### 요약
 
 라이브러리란 소스코드를 공개하지 않거나, 코드를 재사용하기 위해서 미리 컴파일한 오브젝트 파일이다. 라이브러리는 정적 라이브러리와 동적 라이브러리 (공유 라이브러리) 가 있다. Linux 의 정적 라이브러리는 '.a' 파일로 빌드되며 빌드될 때 필요한 부분마다 삽입하기 때문에 코드 중복이 있다. 그러나 코드 최적화가 가능하고 동적으로 연결된 것보다 속도가 빠르다. 반면, 공유 라이브러리는 '.so' 파일로 빌드되고, 여러 프로그램들이 공유해서 사용한다. 코드 최적화가 안 되고 속도가 느리다. 운영 체제에서 Dynamic Linker 가 스캔해서 공유 라이브러리를 관리해야하기 때문에 운영체제가 없으면 사용하기 어렵다. 최초로 호출할 때 공유 라이브러리의 함수 위치를 찾아서 PLT 에 저장해두고, 그 다음부터는 호출할 때 함수 위치를 새로 찾지 않고 기존에 찾아둔 테이블의 위치를 참조하여 접근한다.
+
+
+
+### Library 테스트 방법
+
+1. main.c 를 작성한다.
+
+```c
+#include <stdio.h>
+
+extern int lib_test(void);
+int main(void){
+        printf("This is main!\n");
+        lib_test();
+        return 0;
+}
+```
+
+
+
+2. 라이브러리로 사용할 lib_test.c 를 작성한다.
+
+```c
+#include <stdio.h>
+
+int lib_test(void)
+{
+        printf("This is library!\n");
+        return 0;
+}
+```
+
+
+
+3. lib_test.c 를 라이브러리로 만들기 위해 우선, lib_test.o 오브젝트 파일로 컴파일한다.
+
+```shell
+$ cc -o lib_test.o -c lib_test.c
+```
+
+
+
+4. 그리고 lib_test.o 오브젝트 파일을 이용해서 libtest.a 라이브러리 파일을 생성한다. 생성되는 라이브러리 파일의 이름은 접두사가 lib 여야하고, 접미사는 .a 여야한다.
+
+```shell
+$ ar -rc libtest.a lib_test.o
+```
+
+
+
+5. 만들어진 라이브러리를 활용하여 최종 프로그램을 컴파일합니다.
+
+아래 명령어의 의미는 만들어질 산출물 이름은 (-o 옵션은 결과물 이름을 의미함) final_program.out 이며, main.c 를 컴파일해서 만들 것이고, 라이브러리가 있는 디렉토리 위치는 현재 위치 (-L 옵션에 현재 위치를 뜻하는 . 을 붙임), 라이브러리 명은 libtest.a (접두사, 접미사를 제외하고 -l 옵션에 test 만 쓰면 이렇게 인식됨) 이다.
+
+```shell
+$ cc -o final_program.out main.c -L. -ltest
+```
+
+
+
+6. 출력 결과는 다음과 같다.
+
+```shell
+$ ./final_program.out
+This is main!
+This is library!
+```
+
+
+
+[참고] https://docs.oracle.com/cd/E19120-01/open.solaris/819-0690/chapter2-9/index.html
+
+[참고] https://jihadw.tistory.com/133
+
+
+
+### 기존에 Library 가 있는 경우
+
+1.  위의 절차 중 3번부터 진행한다. 컴파일러를 사용하여 라이브러리 파일을 오브젝트 파일로 빌드한다. (-o 옵션 뒤의 인자가 생성될 결과물의 이름) 컴파일러의 이름은 긴 앞부분은 생략하고 뒷부분만 표기했다.
+
+```shell
+$ ~/aarch64-poky-linux-gcc -c lib_test.c -o lib/lib_test.o
+```
+
+
+
+2. 위에서 생성된 오브젝트 파일을 사용하여 라이브러리 파일을 생성한다. 생성되는 라이브러리명은 lib_test.a 이다.
+
+```shell
+$ ~/aarch64-poky-linux-ar -rc lib/lib_test.a lib/lib_test.o
+```
+
+
+
+3. 기존에 라이브러리가 있기 때문에 2개의 라이브러리를 하나로 합치는 작업을 추가로 진행한다. (기존 라이브러리명은 libprev.a 라고 가정한다.)
+
+```shell
+$ ~/aarch64-poky-linux-ar -rcT lib/liblib_test.a lib/libprev.a lib/lib_test.a
+```
+
+
+
+옵션 설명: -L 은 라이브러리가 존재하는 디렉토리명, -l 은 라이브러리명, -I 는 헤더파일 디렉토리, -i는 헤더파일명 
+
+https://www.rapidtables.com/code/linux/gcc/gcc-l.html
+
+https://www.ibm.com/docs/en/zos/2.2.0?topic=descriptions-ar-create-maintain-library-archives
+
+https://seamless.tistory.com/2 (옵션 표로 잘 정리되어있음)
+
+
+
+컴파일러 전체 주소 예시: opt/poky/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-pocky-linux-
+
+https://discourse.cmake.org/t/ccmake-doesnt-automatically-found-the-toolchain-file-where-cmake-does/2887
+
+
+
+### 라이브러리 사용시 겪었던 에러들
+
+1. 정적 라이브러리 (.a) 들만 가지고 합쳐서 하나의 정적 라이브러리 (.a) 를 만들고자 했을 때 아래 에러 발생
+
+에러 내용: could not read symbols: Archive has no index; run randlib to add one
+
+https://stackoverflow.com/questions/2765240/could-not-read-symbols-archive-has-no-index-run-ranlib-to-add-one
+
+https://kldp.org/node/116896
+
+.a 와 .o 를 합치면 괜찮을 거라 생각했는데 그것도 아니었다. 라이브러리를 만들 때는 .o 파일들만 합쳐야했다.
+
+에러 내용: undefined symbol
+
+https://stackoverflow.com/questions/33851045/gcc-a-static-library-with-undefined-symbols
+
+해결 방법: libtool 을 쓰거나 ar crsT 옵션을 쓰면 된다고 한다.
+
+https://stackoverflow.com/questions/3821916/how-to-merge-two-ar-static-libraries-into-one
