@@ -23,6 +23,17 @@ void arm64_secondary_entry(ulong asm_cpu_num) {
 
 
 
+(2023.04.18 업데이트)
+
+spinlock 코드 내부에서 필요한 ldrex 와 같은 exclusive 가 필요한 연산 (혹은 atomic 하다고도 표현했다 [출처](https://github.com/rust-embedded/rust-raspberrypi-OS-tutorials/discussions/132)) 을 사용하기 위해서는 MMU 가 필요하다. 또한 이전에 조사한 global monitor 가 메모리 간 접근에 대해서 동기화를 해주기 위해서는 MMU 가 켜져야한다. 무조건 event 를 보내주는 것이 아니라 메모리 간 동기화 관련한 업데이트가 발생할 때 event 를 보내주는 역할을 하는 것으로 보인다.
+
+참고
+
+- spinlock 을 사용하기 위한 전제 조건은 MMU enable (질문 답변): https://github.com/rust-embedded/rust-raspberrypi-OS-tutorials/discussions/132
+- local monitor & global monitor 설명 (개인 블로그): http://cloudrain21.com/local-exclusive-monitor-global-exclusive-monitor
+- Exclusive monitor 설명 (ARM 공식문서): https://developer.arm.com/documentation/dht0008/a/arm-synchronization-primitives/exclusive-accesses/exclusive-monitors
+- MMU 내부에 Exclusive instruction 관련 동작 설명 (ARM 공식문서): https://developer.arm.com/documentation/100442/0100/functional-description/memory-management-unit/mmu-memory-accesses/hardware-management-of-the-access-flag-and-dirty-state
+
 
 
 ### Spin lock 코드
@@ -93,7 +104,9 @@ Gloval Monitor는 여러 코어를 연결하는 메모리 (L2 memory) 간에 한
 
 https://tot0rokr.github.io/arm64/synchronization/exclusive-monitor/
 
+![local exclusive monitor, global exclusive monitor](http://cloudrain21.com/wordpress/wp-content/uploads/2014/08/local-exclusive-monitor-global-exclusive-monitor-300x267.png)
 
+그림 및 local & global exclusive monitor 설명: http://cloudrain21.com/local-exclusive-monitor-global-exclusive-monitor
 
 그러므로 global monitor는 mmu 및 cache가 enable 되어야 동작할 것이다. 이와 관련된 질문 답변을 찾았다.
 
