@@ -12,6 +12,16 @@ ex) MOV 1 cycle, LDR 1 or 2 cycle, STR 1 or 2 cycle
 
 
 
+### Cortex-M3 memory map
+
+Cortex M3 는 ARM 에서 memory map 을 한 가지 포맷으로 규정하였다.
+
+![Cortex-M3 memory map](https://t1.daumcdn.net/cfile/tistory/250C094F589EC49111)
+
+https://embed-avr.tistory.com/112
+
+
+
 ### 참고
 
 ARM Assembly 전체적으로 정리된 블로그
