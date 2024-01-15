@@ -478,6 +478,10 @@ https://selfish-developer.com/entry/KVM-ARM
 
 https://patchwork.kernel.org/project/linux-arm-kernel/patch/20210111132811.2455113-17-maz@kernel.org/
 
+arm virtualization host extensions
+
+https://developer.arm.com/documentation/102142/0100/Virtualization-host-extensions
+
 
 
 참고)
