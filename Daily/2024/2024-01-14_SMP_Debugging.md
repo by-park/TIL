@@ -865,6 +865,28 @@ static int __psci_cpu_on(u32 fn, unsigned long cpuid, unsigned long entry_point)
 
 참고)
 
+CPU0 번이 start_kernel 부터 진행되는 과정
+
+https://community.st.com/t5/stm32-mpus-embedded-software/linux-5-4-31-stuck-on-boot-in-start-kernel-arch-cpu-idle/td-p/316707
+
+```c
+#0 cpu_v7_do_idle () at arch/arm/mm/proc-v7.S:78
+#1 0xc010a1a4 in arch_cpu_idle () at arch/arm/kernel/process.c:71
+#2 0xc0158064 in cpuidle_idle_call () at kernel/sched/idle.c:154
+#3 do_idle () at kernel/sched/idle.c:263
+#4 0xc01583d8 in cpu_startup_entry (state=CPUHP_ONLINE) at kernel/sched/idle.c:355
+#5 0xc0acb5b8 in rest_init () at init/main.c:451
+#6 0xc0f00a40 in arch_call_rest_init () at init/main.c:573
+#7 0xc0f00f10 in start_kernel () at init/main.c:785
+#8 0x00000000 in ?? ()
+```
+
+
+
+
+
+참고)
+
 hint #0x22 뜻 조사하기
 
 
