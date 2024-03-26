@@ -883,6 +883,98 @@ https://community.st.com/t5/stm32-mpus-embedded-software/linux-5-4-31-stuck-on-b
 
 
 
+참고)
+
+kernel 부팅을 EL2, EL1 중에 선택하는 방법 질문
+
+CONFIG_ARM64_VHE 옵션을 언급하였는데, 해당 옵션은 존재하지 않았음
+
+https://unix.stackexchange.com/questions/685769/in-arm64-linux-when-linux-is-to-be-run-in-el2-bootloader-in-el3-do-i-have-to
+
+
+
+참고)
+
+ARM Trusted Firmware (EL3) 에서 운영체제를 실행시킬 때 레벨을 설정하는 방법
+
+// lib/el3_runtime/aarch64/context_mgmt.c
+
+```c
+void cm_setup_context(cpu_context_t *ctx, const entry_point_info_t *ep)
+{
+//
+        scr_el3 = read_scr();
+        scr_el3 &= ~(SCR_NS_BIT | SCR_RW_BIT | SCR_FIQ_BIT | SCR_IRQ_BIT |
+                        SCR_ST_BIT | SCR_HCE_BIT);
+        /*
+         * SCR_NS: Set the security state of the next EL.
+         */
+        if (security_state != SECURE)
+                scr_el3 |= SCR_NS_BIT;
+        /*
+         * SCR_EL3.RW: Set the execution state, AArch32 or AArch64, for next
+         *  Exception level as specified by SPSR.
+         */
+        if (GET_RW(ep->spsr) == MODE_RW_64)
+                scr_el3 |= SCR_RW_BIT;
+//
+         /*
+         * Populate EL3 state so that we've the right context
+         * before doing ERET
+         */
+        state = get_el3state_ctx(ctx);
+        write_ctx_reg(state, CTX_SCR_EL3, scr_el3);
+        write_ctx_reg(state, CTX_ELR_EL3, ep->pc);
+        write_ctx_reg(state, CTX_SPSR_EL3, ep->spsr);
+```
+
+
+
+SPSR 설정하는 부분 찾기
+
+// bl31/bl31_main.c
+
+```c
+        /* Program EL3 registers to enable entry into the next EL */
+        next_image_info = bl31_plat_get_next_image_ep_info(image_type);
+        assert(next_image_info != NULL);
+        assert(image_type == GET_SECURITY_STATE(next_image_info->h.attr));
+
+        INFO("BL31: Preparing for EL3 exit to %s world\n",
+                (image_type == SECURE) ? "secure" : "normal");
+        print_entry_point_info(next_image_info);
+        cm_init_my_context(next_image_info);
+        cm_prepare_el3_exit(image_type);
+```
+
+SPSR 레지스터에 MODE_EL1 을 설정하고 eret 을 하면 EL1 으로 동작하게 됨. ELR 에 동작했을 때 점프할 주소도 적어두어야한다.
+
+// plat/arm/common/arm_common.c
+
+```c
+#ifdef __aarch64__
+uint32_t arm_get_spsr_for_bl33_entry(void)
+{
+        unsigned int mode;
+        uint32_t spsr;
+
+        /* Figure out what mode we enter the non-secure world in */
+        mode = (el_implemented(2) != EL_IMPL_NONE) ? MODE_EL2 : MODE_EL1;
+
+        /*
+         * TODO: Consider the possibility of specifying the SPSR in
+         * the FIP ToC and allowing the platform to have a say as
+         * well.
+         */
+        spsr = SPSR_64((uint64_t)mode, MODE_SP_ELX, DISABLE_ALL_EXCEPTIONS);
+        return spsr;
+}
+```
+
+
+
+
+
 
 
 참고)
