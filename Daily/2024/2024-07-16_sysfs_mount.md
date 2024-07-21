@@ -48,3 +48,10 @@ kernel 단독 build 시 에러 해결
 
 `make -j32`
 
+
+
+에러 메세지가 `*** Can't find default configuration "arch/x86/configs/이름_defconfig"!` 라면
+
+`export ARCH=arm64` 를 해야하는 것이다. 제대로 환경변수가 설정되지 않은 상태에서 빌드를 시도하면 `error: "CONFIG_이름" is not defined [-Werror=undef]` 를 볼 수 있다.
+
+에러 메세지가 `gcc: error: unrecognized command line option '-mlittle-endian'; did you mean '-fconvert=little-endian'?` 이라면 컴파일러가 잘못 잡혔으므로 `export CROSS_COMPILE=컴파일러경로` 을 해야하는 것이다.
