@@ -269,19 +269,96 @@ COMPILER_TYPE=gcc
 
 3. uart driver 포팅 필요
 
+platform/ 에 debug.c 에 platform_dputc (쓰는 거) 와 platform_dgetc (받는 거)구현 필요
+
+```c
+void platform_dputc(char c) {
+    if (c == '\n') {
+        _dputc('\r');
+    }
+
+    _dputc(c);
+}
+
+int platform_dgetc(char *c, bool wait) {
+    return dgetc(c, wait);
+}
+```
 
 
-4. mmu table & WITH_KERNEL_VM config enable
+
+4. 운영체제를 위한 메모리 설정
+
+(1) KERNEL_BASE 를 원래 MEMBASE 로 하면 1:1 매핑인데 `KERNEL_BASE = $(MEMBASE)`
+
+가상 주소를 사용하기 위해 0xFFFF~ 로 시작하게 매핑함 `KERNEL_BASE := 0xFFFF000056000000`
+
+(2) WITH_KERNEL_VM config enable
+
+arch 의 rules.mk 에서 `WITH_KERNEL_VM ?= 0` 을 하기 때문에 그 전에 WITH_KERNEL_VM 을 1로 설정해줘야한다.
+
+(3) mmu table
+
+platform/ 안에 platform.c 파일 만들어서 추가함
+
+```c
+struct mmu_initial_mapping mmu_initial_mappings[] = {
+    /* 2GB of DRAM */
+    {
+        .phys = 0x80000000,
+        .virt = 0xFFFF000080000000,
+        .size = 0x80000000,
+        .flags = 0,
+        .name = "dram"
+    },
+    /* SFR */
+    {
+        .phys = 0x10000000,
+        .virt = 0xFFFF000010000000,
+        .size = 0x10000000,
+        .flags = MMU_INITIAL_MAPPING_FLAG_DEVICE,
+        .name = "device1"
+    },
+    /* null entry to terminate the list */
+    {0}
+}
+```
+
+heap 에서 메모리 영역 관리할 때 사용하도록 arena 를 추가함. malloc 할 때 이 주소에서 할당해준다.
+
+```c
+static pmm_arena_t arena = {
+    .name = "dram",
+    .base = 0x40000000,
+    .size = 0x40000000,
+    .flags = PMM_ARENA_FLAG_KMAP,
+}
+
+void platform_early_init(void) {
+    uart_init();
+    arm_gic_init();
+    arm_generic_timer_init(); // HOOK 이 있어서 여기서 호출할 필요 없을 것 같다.
+    pmm_add_arena(&arena);
+}
+```
 
 
 
-arm gic 설정 필요
+가상 주소를 사용하지 않으면 (`WITH_KERNEL_VM`), arm64_fpu_pre_context_switch 에서 문제 발생
+
+그래서 config 를 켜기 전에 해당 함수를 잠깐 주석처리했다가 다시 켰다.
 
 
 
-strict-align 옵션 필요한지 확인하기
+5. arm gic 설정 필요
 
-floating 연산을 하려면 general-regs-only 옵션 제거해야함
+주소 설정 필요함
 
 
+
+※ strict-align 옵션 필요한지 확인하기 (필요하지 않음) 속도를 빠르게 하기 위해 align 시켜서 memory access 하는 것
+
+※ floating 연산을 하려면 general-regs-only 옵션 제거해야함
+
+※ project / target / platform / arch / app 이 각각 어떤 기준으로 구분된 건지 찾기
 

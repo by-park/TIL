@@ -45,6 +45,12 @@ DSFC (Data Fault Status Code) 를 보면 alignment fault 이다.
 
 
 
+FAR 은 Fault address register 로 문제 생긴 접근 주소를 알려준다.
+
+https://developer.arm.com/documentation/ddi0229/c/configuration/registers/fault-address-register
+
+
+
 죽은 위치는 (PC) arm64_fpu_pre_context_switch 였다.
 
 그래서 ARCH_COMPILEFLAGS_NOFLOAT := -mgeneral-regs-only 주석처리해뒀던 것을 다시 설정해줬다.
@@ -89,6 +95,10 @@ thread_become_idle -> idle_thread_routine -> thread_resched -> arm64_fpu_save_st
 
 
 문제는 NEON register 인 q0 등이 128 비트 (16 바이트) 단위이기 때문에 stp 를 이용한 memory access 시 16 바이트 align 을 요구하는 것으로 보인다. 아래 2가지 사항 추가로 해결되는 것을 보았다. (둘 중 하나만 적용하면 안 된다.)
+
+NEON register 크기: https://developer.arm.com/documentation/dht0002/a/Introducing-NEON/NEON-architecture-overview/NEON-instructions
+
+동일한 문제 (라즈베리 파이3): https://forums.raspberrypi.com/viewtopic.php?t=254677
 
 1. 16 byte align 을 맞추도록 구조체들에 attribute 를 설정한다.
 
@@ -146,4 +156,6 @@ thread_t *thread_create_etc(thread_t *t, const char *name, thread_start_routine 
 참고로, strict-align 은 unaligned 된 접근은 속도가 느리기 때문에 빠른 속도를 위해 align 을 강제하는 옵션으로 보인다.
 
 https://gcc.gnu.org/onlinedocs/gcc-9.2.0/gcc/AArch64-Function-Attributes.html
+
+그리고 본 테스트는 WITH_VM_KERNEL 을 끄고 테스트를 진행했다. 옵션을 켜서 physical memory 를 virtual memory 로 매핑하여 동작시키면 alignment 로 인한 문제는 발생하지 않는다.
 
